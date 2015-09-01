@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Funcionarios</title>
+    </h:head>
+    <h:body>
+        <f:view>
+            <h:form acceptcharset="UTF-8" enctype="multipart/form-data">
+                <p:panelGrid columns="2">
+                    <p:outputLabel for="funcionario" value="Funcionario"/>
+                    <p:selectOneMenu id="funcionario" value="#{calificarFuncionarioBean.funcionario}">
+                        <f:selectItem itemLabel="Select One" itemValue="" />
+                        <f:selectItems value="#{calificarFuncionarioBean.funcionarios}" var="item" itemLabel="#{item.correo}" itemValue="#{item.idUsuarios}" />
+                    </p:selectOneMenu>
+
+                    <p:outputLabel for="porcentaje" value="Calificación (0 a 100)"/>
+                    <p:spinner id="porcentaje" min="0" max="100" suffix="%" required="true"/>
+
+                    <p:outputLabel for="justificacion" value="Justificación"/>
+                    <p:inputTextarea id="justificacion" autoResize="true" required="true"/>
+
+                    <p:outputLabel value="Archivos de justificacion"/>
+                    <h:inputFile id="file" value="#{calificarFuncionarioBean.file}" required="true"/>
+                    
+                    <f:facet name="footer">
+                        <h:commandButton value="Enviar" action="#{calificarFuncionarioBean.handleCrear}">
+                            <f:ajax execute="@all" render="@form"/>
+                        </h:commandButton>
+                    </f:facet>
+                </p:panelGrid>
+                <p:growl id="messages" showDetail="true" life="10000" />
+            </h:form>
+        </f:view>
+    </h:body>
+</html>
+
