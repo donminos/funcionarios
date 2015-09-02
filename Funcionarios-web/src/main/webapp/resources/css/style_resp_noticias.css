@@ -1,0 +1,14 @@
+/* 
+    Created on : 2/09/2015, 12:09:04 AM
+    Author     : Carlos Cesar Rosas
+*/
+@media screen and (max-width:480px){
+    .noticiaPanel {
+        margin: 0 auto;
+        width: 100%;
+    }
+    img{
+        width: 100% !important;
+        height: 100% !important;
+    }
+}

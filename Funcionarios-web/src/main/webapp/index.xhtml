@@ -6,6 +6,7 @@
       xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>Funcionarios</title>
+        <h:outputStylesheet name="style.css" library="css"/>
     </h:head>
     <h:body>
         <f:view>
@@ -16,24 +17,39 @@
             <h:form> 
                 <p:dataScroller value="#{indexBean.informesnoticias}" var="info" chunkSize="10">
                     <f:facet name="header">
-                        Scroll Down to Load More Cars
+                        Informes y Noticias
                     </f:facet>
 
-                    <h:panelGrid columns="2" style="width:100%" columnClasses="logo,detail">
-                        <!--<p:graphicImage name="demo/images/car/#{car.brand}-big.gif" /> -->
-                        <p:outputPanel>
-                            <h:panelGrid columns="2" cellpadding="5">
-                                <h:outputText value="titulo" />
-                                <h:outputText value="#{info.titulo}" style="font-weight: bold"/>
-
-                                <h:outputText value="categoria:" />
-                                <h:outputText value="#{info.idCategoria}" style="font-weight: bold"/>
-
-                                <h:outputText value="cuerpo:" />
-                                <h:outputText value="#{info.cuerpo}" style="font-weight: bold"/>
-                            </h:panelGrid>
-                        </p:outputPanel>
-                    </h:panelGrid>
+                    <p:panelGrid columns="2" style="width:100%" columnClasses="logo,detail" layout="grid">
+                        <p:column>
+                            <p:graphicImage class="logoNoticia" name="imagenes/informesNoticias/#{info.tituloImagen}" />
+                        </p:column>
+                        <p:column>
+                            <p:outputPanel>
+                                <p:panelGrid layout="grid">
+                                    <p:row>
+                                        <p:column>
+                                            <h:outputText value="#{info.titulo}" style="font-weight: bold"/>
+                                        </p:column>
+                                        <p:column>
+                                            <h:outputText value="Categoria:#{info.idCategoria.categoria}" style="font-weight: bold"/>
+                                        </p:column>
+                                        <p:column>
+                                            <h:outputText value="Funcionario:#{info.funcionario.datosFuncionarios.nombre} #{info.funcionario.datosFuncionarios.apellidoP} #{info.funcionario.datosFuncionarios.apellidoM}" style="font-weight: bold"/>
+                                        </p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column colspan="3">
+                                            <h:outputText value="#{info.cuerpo.substring(0,(info.cuerpo.length()*0.1))}... " escape="false" style="font-weight: bold"/>
+                                            <p:link outcome="noticias" value="Leer más">
+                                                <f:param name="noticiaId" value="#{info.idInforme}" />
+                                            </p:link>
+                                        </p:column>
+                                    </p:row>
+                                </p:panelGrid>
+                            </p:outputPanel>
+                        </p:column>
+                    </p:panelGrid>
                 </p:dataScroller>
             </h:form>
         </f:view>

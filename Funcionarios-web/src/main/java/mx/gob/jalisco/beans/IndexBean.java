@@ -19,10 +19,10 @@ public class IndexBean {
     private InformesNoticiasSessionLocal informesNoticiasSession;
     private List<InformesNoticias> informesnoticias;
     public IndexBean() {
-        informesnoticias=informesNoticiasSession.findAll();
     }
 
     public List<InformesNoticias> getInformesnoticias() {
+        informesnoticias=informesNoticiasSession.findAll();
         return informesnoticias;
     }
 

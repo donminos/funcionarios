@@ -1,0 +1,23 @@
+/* 
+    Created on : 2/09/2015, 12:09:04 AM
+    Author     : Carlos Cesar Rosas
+*/
+.ui-datascroller .ui-datascroller-item {
+    border-bottom: 1px solid #a8a8a8 !important;
+    padding: 25px 10px;
+}
+.logo{
+    width: 120px;
+    border-style: hidden !important;
+}
+.detail{
+    border-style: hidden !important;
+}
+.logoNoticia{
+    width: 100px;
+    border-style: hidden !important;
+}
+.noticiaPanel {
+    margin: 0 auto;
+    width: 75%;
+}

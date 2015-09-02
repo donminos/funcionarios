@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:outputStylesheet name="style.css" library="css"/>
+    <h:outputStylesheet name="style_resp_noticias.css" library="css"/>
+    <h:body>
+        <f:metadata>
+            <f:viewParam name="noticiaId" value="#{noticiasBean.noticiaId}" />
+        </f:metadata>
+        <p:panelGrid layout="grid" class="noticiaPanel">
+            <f:facet name="header">
+                <p:row>
+                    <p:column>
+                        <p:outputLabel value="#{noticiasBean.noticia.titulo}" escape="false"/>
+                </p:column>
+                </p:row>
+            </f:facet>
+            <p:row>
+                <p:column>
+                    <p:outputLabel value="#{noticiasBean.noticia.cuerpo}" escape="false"/>
+                </p:column>
+            </p:row>
+        </p:panelGrid>
+    </h:body>
+</html>
+
