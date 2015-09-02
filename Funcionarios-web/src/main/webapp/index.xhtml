@@ -7,6 +7,7 @@
     <h:head>
         <title>Funcionarios</title>
         <h:outputStylesheet name="style.css" library="css"/>
+        <h:outputStylesheet name="style_resp.css" library="css"/>
     </h:head>
     <h:body>
         <f:view>
@@ -20,13 +21,13 @@
                         Informes y Noticias
                     </f:facet>
 
-                    <p:panelGrid columns="2" style="width:100%" columnClasses="logo,detail" layout="grid">
+                    <p:panelGrid columns="2" style="width:100%" columnClasses="logo,detail">
                         <p:column>
                             <p:graphicImage class="logoNoticia" name="imagenes/informesNoticias/#{info.tituloImagen}" />
                         </p:column>
                         <p:column>
                             <p:outputPanel>
-                                <p:panelGrid layout="grid">
+                                <p:panelGrid>
                                     <p:row>
                                         <p:column>
                                             <h:outputText value="#{info.titulo}" style="font-weight: bold"/>

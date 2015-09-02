@@ -30,13 +30,16 @@
 
                     <p:row>
                         <p:column>
-                            <p:outputLabel for="categoria" value="Categoria"/>
+                            <p:outputLabel for="categorias" value="Categoria"/>
                         </p:column>
                         <p:column>
-                            <p:inputText id="categoria" />
+                            <p:selectOneMenu id="categorias">
+                                <f:selectItem itemLabel="Selecciona una categoria" itemValue="" />
+                                <f:selectItems value="#{seguimientoBean.categorias}" var="cat" itemLabel="#{cat.categoria}" itemValue="#{cat.idCategoria}" />
+                            </p:selectOneMenu>
                         </p:column>
                     </p:row>
-                    
+
                     <p:row>
                         <p:column>
                             <p:outputLabel for="file" value="Imagen destacada"/>
@@ -45,7 +48,7 @@
                             <h:inputFile id="file"/>
                         </p:column>
                     </p:row>
-                    
+
                     <p:row>
                         <p:column colspan="2">
                             <p:editor />

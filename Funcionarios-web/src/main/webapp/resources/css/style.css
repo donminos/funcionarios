@@ -7,11 +7,12 @@
     padding: 25px 10px;
 }
 .logo{
-    width: 120px;
+    width: 120px !important;
     border-style: hidden !important;
 }
 .detail{
     border-style: hidden !important;
+    width: 100% !important;
 }
 .logoNoticia{
     width: 100px;
@@ -20,4 +21,7 @@
 .noticiaPanel {
     margin: 0 auto;
     width: 75%;
+}
+.ui-panelgrid .ui-panelgrid-cell{
+    float: none !important;
 }

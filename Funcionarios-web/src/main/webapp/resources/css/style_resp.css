@@ -4,5 +4,8 @@
     Author     : Carlos Cesar Rosas
 */
 .ui-panelgrid .ui-panelgrid-cell {
-    float: left;
+    float: left !important;
+}
+.detail{
+    width: auto !important;
 }

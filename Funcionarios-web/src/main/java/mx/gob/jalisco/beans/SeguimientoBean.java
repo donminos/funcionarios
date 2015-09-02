@@ -1,10 +1,11 @@
 package mx.gob.jalisco.beans;
 
+import java.util.List;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
-import mx.gob.jalisco.entity.Usuarios;
-import mx.gob.jalisco.session.UsuariosSessionLocal;
+import mx.gob.jalisco.entity.Categorias;
+import mx.gob.jalisco.session.CategoriasSessionLocal;
 
 /**
  *
@@ -13,21 +14,14 @@ import mx.gob.jalisco.session.UsuariosSessionLocal;
 @Named(value = "seguimientoBean")
 @RequestScoped
 public class SeguimientoBean {
-
     @EJB
-    private UsuariosSessionLocal usuariosSession;
+    private CategoriasSessionLocal categoriasSession;
     
-    private Usuarios usuario;
 
     public SeguimientoBean() {
     }
-
-    public Usuarios getUsuario() {
-        return usuario;
+    
+    public List<Categorias> getCategorias(){
+        return categoriasSession.findAll();
     }
-
-    public void setUsuario(Usuarios usuario) {
-        this.usuario = usuario;
-    }
-
 }
