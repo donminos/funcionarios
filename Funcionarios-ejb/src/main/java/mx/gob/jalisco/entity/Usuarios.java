@@ -40,6 +40,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Usuarios.findByCorreo", query = "SELECT u FROM Usuarios u WHERE u.correo = :correo"),
     @NamedQuery(name = "Usuarios.findByContrasena", query = "SELECT u FROM Usuarios u WHERE u.contrasena = :contrasena")})
 public class Usuarios implements Serializable {
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "funcionario")
+    private List<InformesNoticias> informesNoticiasList;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -152,6 +154,15 @@ public class Usuarios implements Serializable {
     @Override
     public String toString() {
         return "mx.gob.jalisco.entity.Usuarios[ idUsuarios=" + idUsuarios + " ]";
+    }
+
+    @XmlTransient
+    public List<InformesNoticias> getInformesNoticiasList() {
+        return informesNoticiasList;
+    }
+
+    public void setInformesNoticiasList(List<InformesNoticias> informesNoticiasList) {
+        this.informesNoticiasList = informesNoticiasList;
     }
     
 }
