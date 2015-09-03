@@ -31,23 +31,22 @@ public class CalificarFuncionarioBean{
     private mx.gob.jalisco.session.CalificacionesSessionLocal calificacionesSession;
 
     private Part file;
-    private Usuarios funcionario;
+    private Integer funcionario;
     private Calificaciones calificacion;
 
     public CalificarFuncionarioBean() {
         calificacion = new Calificaciones();
-        funcionario = new Usuarios();
     }
 
     public List<Usuarios> getFuncionarios() {
         return usuariosSession.findAll();
     }
 
-    public Usuarios getFuncionario() {
+    public Integer getFuncionario() {
         return funcionario;
     }
 
-    public void setFuncionario(Usuarios funcionario) {
+    public void setFuncionario(Integer funcionario) {
         this.funcionario = funcionario;
     }
 
@@ -82,11 +81,10 @@ public class CalificarFuncionarioBean{
                     new IOException("Error archivo");
                 }
             }
-            calificacion.setIdUsuarios(usuariosSession.find(funcionario.getIdUsuarios()));
-            calificacion.setFuncionarioEvaluado(usuariosSession.find(funcionario.getIdUsuarios()));
+            calificacion.setIdUsuarios(usuariosSession.find(funcionario));
+            calificacion.setFuncionarioEvaluado(usuariosSession.find(funcionario));
             calificacionesSession.create(calificacion);
             calificacion = new Calificaciones();
-            funcionario = new Usuarios();
 
             FacesMessage message = new FacesMessage("Succesful", "Se ha mandado tu calificacion");
             FacesContext.getCurrentInstance().addMessage(null, message);
