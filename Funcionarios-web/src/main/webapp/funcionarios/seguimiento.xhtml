@@ -24,7 +24,7 @@
                         </p:column>
 
                         <p:column>
-                            <p:inputText id="titulo" value="#{seguimientoBean.informes.titulo}"/>
+                            <p:inputText id="titulo" value="#{seguimientoBean.informes.titulo}" required="true" requiredMessage="Es necesario Un titulo"/>
                         </p:column>
                     </p:row>
 
@@ -33,7 +33,7 @@
                             <p:outputLabel for="categorias" value="Categoria"/>
                         </p:column>
                         <p:column>
-                            <p:selectOneMenu id="categorias" value="#{seguimientoBean.categoria.idCategoria}">
+                            <p:selectOneMenu id="categorias" value="#{seguimientoBean.categoria.idCategoria}" required="true" requiredMessage="Selecciona una categoria">
                                 <f:selectItem itemLabel="Selecciona una categoria" itemValue="" />
                                 <f:selectItems value="#{seguimientoBean.categorias}" var="cat" itemLabel="#{cat.categoria}" itemValue="#{cat.idCategoria}" />
                             </p:selectOneMenu>
@@ -50,8 +50,8 @@
                     </p:row>
 
                     <p:row>
-                        <p:column colspan="2">
-                            <p:editor value="#{seguimientoBean.informes.cuerpo}"/>
+                        <p:column id="Cuerpo" colspan="2">
+                            <p:editor value="#{seguimientoBean.informes.cuerpo}" required="true" requiredMessage="Es necesario el cuerpo del la noticia"/>
                         </p:column>
                     </p:row>
 
@@ -65,6 +65,7 @@
                         </p:row>
                     </f:facet>
                 </p:panelGrid>
+                <p:growl id="messages" showDetail="true" life="10000" />
             </h:form>
         </h:body>
     </f:view>

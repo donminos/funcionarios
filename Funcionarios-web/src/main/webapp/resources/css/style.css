@@ -15,7 +15,7 @@
     width: 100% !important;
 }
 .logoNoticia{
-    width: 100px;
+    width: 200px;
     border-style: hidden !important;
 }
 .noticiaPanel {
@@ -24,4 +24,7 @@
 }
 .ui-panelgrid .ui-panelgrid-cell{
     float: none !important;
+}
+.tableInfo {
+    width: 100%;
 }

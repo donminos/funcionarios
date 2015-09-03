@@ -3,9 +3,11 @@
     Created on : 2/09/2015, 12:16:45 AM
     Author     : Carlos Cesar Rosas
 */
-.ui-panelgrid .ui-panelgrid-cell {
-    float: left !important;
-}
-.detail{
-    width: auto !important;
+@media screen and (max-width:480px){
+    .ui-panelgrid .ui-panelgrid-cell {
+        float: left !important;
+    }
+    .detail{
+        width: auto !important;
+    }
 }

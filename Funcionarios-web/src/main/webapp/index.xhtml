@@ -2,7 +2,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>Funcionarios</title>
@@ -23,17 +22,17 @@
 
                     <p:panelGrid columns="2" style="width:100%" columnClasses="logo,detail">
                         <p:column>
-                            <p:graphicImage class="logoNoticia" name="imagenes/informesNoticias/#{info.tituloImagen}" />
+                            <p:graphicImage class="logoNoticia" name="imagenes/informesNoticias/#{info.tituloImagen!=null?info.tituloImagen:'no_disponible.jpg'}" />
                         </p:column>
                         <p:column>
                             <p:outputPanel>
-                                <p:panelGrid>
+                                <p:panelGrid styleClass="tableInfo">
                                     <p:row>
                                         <p:column>
                                             <h:outputText value="#{info.titulo}" style="font-weight: bold"/>
                                         </p:column>
                                         <p:column>
-                                            <h:outputText value="Categoria:#{info.idCategoria.categoria}" style="font-weight: bold"/>
+                                            <h:outputText value="Categoria:#{info.categoria.categoria}" style="font-weight: bold"/>
                                         </p:column>
                                         <p:column>
                                             <h:outputText value="Funcionario:#{info.funcionario.datosFuncionarios.nombre} #{info.funcionario.datosFuncionarios.apellidoP} #{info.funcionario.datosFuncionarios.apellidoM}" style="font-weight: bold"/>
@@ -41,10 +40,14 @@
                                     </p:row>
                                     <p:row>
                                         <p:column colspan="3">
-                                            <h:outputText value="#{info.cuerpo.substring(0,(info.cuerpo.length()*0.1))}... " escape="false" style="font-weight: bold"/>
-                                            <p:link outcome="noticias" value="Leer más">
+                                            <h:outputText value="#{info.cuerpo.substring(0,(info.cuerpo.length()*0.1))}... " escape="false"/>
+                                        </p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column colspan="3">
+                                            <h:link outcome="noticias" value=" Leer más">
                                                 <f:param name="noticiaId" value="#{info.idInforme}" />
-                                            </p:link>
+                                            </h:link>
                                         </p:column>
                                     </p:row>
                                 </p:panelGrid>

@@ -37,7 +37,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Calificaciones.findByIdCalificaciones", query = "SELECT c FROM Calificaciones c WHERE c.idCalificaciones = :idCalificaciones"),
     @NamedQuery(name = "Calificaciones.findByCalificacion", query = "SELECT c FROM Calificaciones c WHERE c.calificacion = :calificacion"),
     @NamedQuery(name = "Calificaciones.findByArchivo", query = "SELECT c FROM Calificaciones c WHERE c.archivo = :archivo"),
-    @NamedQuery(name = "Calificaciones.findByFuncionarioEvaluado", query = "SELECT c FROM Calificaciones c WHERE c.funcionarioEvaluado = :funcionarioEvaluado"),
     @NamedQuery(name = "Calificaciones.findByFechaEvaluacion", query = "SELECT c FROM Calificaciones c WHERE c.fechaEvaluacion = :fechaEvaluacion")})
 public class Calificaciones implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -49,7 +48,7 @@ public class Calificaciones implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "calificacion")
-    private boolean calificacion;
+    private short calificacion;
     @Basic(optional = false)
     @NotNull
     @Lob
@@ -59,15 +58,12 @@ public class Calificaciones implements Serializable {
     @Size(max = 45)
     @Column(name = "archivo")
     private String archivo;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "funcionarioEvaluado")
-    private int funcionarioEvaluado;
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "fechaEvaluacion")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaEvaluacion;
+    @JoinColumn(name = "funcionarioEvaluado", referencedColumnName = "idUsuarios")
+    @ManyToOne(optional = false)
+    private Usuarios funcionarioEvaluado;
     @JoinColumn(name = "idUsuarios", referencedColumnName = "idUsuarios")
     @ManyToOne(optional = false)
     private Usuarios idUsuarios;
@@ -79,12 +75,10 @@ public class Calificaciones implements Serializable {
         this.idCalificaciones = idCalificaciones;
     }
 
-    public Calificaciones(Integer idCalificaciones, boolean calificacion, String justificacion, int funcionarioEvaluado, Date fechaEvaluacion) {
+    public Calificaciones(Integer idCalificaciones, short calificacion, String justificacion) {
         this.idCalificaciones = idCalificaciones;
         this.calificacion = calificacion;
         this.justificacion = justificacion;
-        this.funcionarioEvaluado = funcionarioEvaluado;
-        this.fechaEvaluacion = fechaEvaluacion;
     }
 
     public Integer getIdCalificaciones() {
@@ -95,11 +89,11 @@ public class Calificaciones implements Serializable {
         this.idCalificaciones = idCalificaciones;
     }
 
-    public boolean getCalificacion() {
+    public short getCalificacion() {
         return calificacion;
     }
 
-    public void setCalificacion(boolean calificacion) {
+    public void setCalificacion(short calificacion) {
         this.calificacion = calificacion;
     }
 
@@ -119,20 +113,20 @@ public class Calificaciones implements Serializable {
         this.archivo = archivo;
     }
 
-    public int getFuncionarioEvaluado() {
-        return funcionarioEvaluado;
-    }
-
-    public void setFuncionarioEvaluado(int funcionarioEvaluado) {
-        this.funcionarioEvaluado = funcionarioEvaluado;
-    }
-
     public Date getFechaEvaluacion() {
         return fechaEvaluacion;
     }
 
     public void setFechaEvaluacion(Date fechaEvaluacion) {
         this.fechaEvaluacion = fechaEvaluacion;
+    }
+
+    public Usuarios getFuncionarioEvaluado() {
+        return funcionarioEvaluado;
+    }
+
+    public void setFuncionarioEvaluado(Usuarios funcionarioEvaluado) {
+        this.funcionarioEvaluado = funcionarioEvaluado;
     }
 
     public Usuarios getIdUsuarios() {

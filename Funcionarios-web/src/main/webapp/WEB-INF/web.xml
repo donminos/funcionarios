@@ -26,7 +26,7 @@
         <load-on-startup>1</load-on-startup>
         <multipart-config>
             <!--Para elfuncionamiento de la subida de archivos-->
-            <location>/tmp/</location>
+            <location>/home/ceasar/NetBeansProjects/Funcionarios/Funcionarios-web/src/main/webapp/resources/imagenes/</location>
             <max-file-size>5000000</max-file-size>
             <max-request-size>5000000</max-request-size>
             <file-size-threshold>1000000</file-size-threshold>

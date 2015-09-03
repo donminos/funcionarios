@@ -12,6 +12,7 @@ import javax.faces.context.FacesContext;
 import javax.servlet.http.Part;
 import mx.gob.jalisco.entity.Categorias;
 import mx.gob.jalisco.entity.InformesNoticias;
+import mx.gob.jalisco.libs.GenerateRandomName;
 import mx.gob.jalisco.session.CategoriasSessionLocal;
 import mx.gob.jalisco.session.InformesNoticiasSessionLocal;
 import mx.gob.jalisco.session.UsuariosSessionLocal;
@@ -69,16 +70,22 @@ public class SeguimientoBean {
     }
 
     public void crearNoticia() {
-        try {
-            file.write("test.jpg");
-            informes.setFuncionario(usuariosSession.find(1));
-            informesNoticiasSession.create(informes);
-            FacesMessage message = new FacesMessage("Succesful", "Good");
-            FacesContext.getCurrentInstance().addMessage(null, message);
-        } catch (IOException ex) {
-            FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "No es un tipo de archivo valido"));
-            Logger.getLogger(SeguimientoBean.class.getName()).log(Level.SEVERE, null, ex);
+        if (file != null) {
+            try {
+                GenerateRandomName random = new GenerateRandomName();
+                String namefile = random.Generate() + ".jpg";
+                file.write("/informesNoticias/" + namefile);
+                informes.setTituloImagen(namefile);
+            } catch (IOException ex) {
+                FacesContext context = FacesContext.getCurrentInstance();
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "No es un tipo de archivo valido"));
+                Logger.getLogger(SeguimientoBean.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
+        informes.setFuncionario(usuariosSession.find(1));
+        informes.setCategoria(categoria);
+        informesNoticiasSession.create(informes);
+        FacesMessage message = new FacesMessage("Succesful", "Se ha publicado la noticia");
+        FacesContext.getCurrentInstance().addMessage(null, message);
     }
 }

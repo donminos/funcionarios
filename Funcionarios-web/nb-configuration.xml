@@ -18,4 +18,14 @@ Any value defined here will override the pom.xml file value but is only applicab
         <org-netbeans-modules-projectapi.jsf_2e_language>Facelets</org-netbeans-modules-projectapi.jsf_2e_language>
         <org-netbeans-modules-javascript2-requirejs.enabled>true</org-netbeans-modules-javascript2-requirejs.enabled>
     </properties>
+    <config-data xmlns="http://www.netbeans.org/ns/maven-config-data/1">
+        <configurations>
+            <configuration id="Local" profiles="">
+                <properties>
+                <build.profile.id>test</build.profile.id>
+                </properties>
+            </configuration>
+            <configuration id="Produccion" profiles=""/>
+        </configurations>
+    </config-data>
 </project-shared-configuration>

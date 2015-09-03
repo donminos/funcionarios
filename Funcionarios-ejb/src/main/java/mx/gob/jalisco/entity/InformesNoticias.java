@@ -6,6 +6,7 @@
 package mx.gob.jalisco.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,6 +19,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -33,7 +36,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "InformesNoticias.findAll", query = "SELECT i FROM InformesNoticias i"),
     @NamedQuery(name = "InformesNoticias.findByIdInforme", query = "SELECT i FROM InformesNoticias i WHERE i.idInforme = :idInforme"),
     @NamedQuery(name = "InformesNoticias.findByTitulo", query = "SELECT i FROM InformesNoticias i WHERE i.titulo = :titulo"),
-    @NamedQuery(name = "InformesNoticias.findByTituloImagen", query = "SELECT i FROM InformesNoticias i WHERE i.tituloImagen = :tituloImagen")})
+    @NamedQuery(name = "InformesNoticias.findByTituloImagen", query = "SELECT i FROM InformesNoticias i WHERE i.tituloImagen = :tituloImagen"),
+    @NamedQuery(name = "InformesNoticias.findByFechaCreacion", query = "SELECT i FROM InformesNoticias i WHERE i.fechaCreacion = :fechaCreacion"),
+    @NamedQuery(name = "InformesNoticias.findByFechaModificacion", query = "SELECT i FROM InformesNoticias i WHERE i.fechaModificacion = :fechaModificacion")})
 public class InformesNoticias implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -55,9 +60,15 @@ public class InformesNoticias implements Serializable {
     @Size(max = 45)
     @Column(name = "tituloImagen")
     private String tituloImagen;
-    @JoinColumn(name = "idCategoria", referencedColumnName = "idCategoria")
+    @Column(name = "fechaCreacion")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechaCreacion;
+    @Column(name = "fechaModificacion")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechaModificacion;
+    @JoinColumn(name = "categoria", referencedColumnName = "idCategoria")
     @ManyToOne(optional = false)
-    private Categorias idCategoria;
+    private Categorias categoria;
     @JoinColumn(name = "funcionario", referencedColumnName = "idUsuarios")
     @ManyToOne(optional = false)
     private Usuarios funcionario;
@@ -107,12 +118,28 @@ public class InformesNoticias implements Serializable {
         this.tituloImagen = tituloImagen;
     }
 
-    public Categorias getIdCategoria() {
-        return idCategoria;
+    public Date getFechaCreacion() {
+        return fechaCreacion;
     }
 
-    public void setIdCategoria(Categorias idCategoria) {
-        this.idCategoria = idCategoria;
+    public void setFechaCreacion(Date fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
+    }
+
+    public Date getFechaModificacion() {
+        return fechaModificacion;
+    }
+
+    public void setFechaModificacion(Date fechaModificacion) {
+        this.fechaModificacion = fechaModificacion;
+    }
+
+    public Categorias getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(Categorias categoria) {
+        this.categoria = categoria;
     }
 
     public Usuarios getFuncionario() {
