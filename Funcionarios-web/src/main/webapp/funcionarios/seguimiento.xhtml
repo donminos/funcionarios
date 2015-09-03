@@ -9,7 +9,7 @@
     </h:head>
     <f:view>
         <h:body>
-            <h:form>
+            <h:form acceptcharset="UTF-8" enctype="multipart/form-data">
                 <p:panelGrid>
                     <f:facet name="header">
                         <p:row>
@@ -24,7 +24,7 @@
                         </p:column>
 
                         <p:column>
-                            <p:inputText id="titulo" />
+                            <p:inputText id="titulo" value="#{seguimientoBean.informes.titulo}"/>
                         </p:column>
                     </p:row>
 
@@ -33,7 +33,7 @@
                             <p:outputLabel for="categorias" value="Categoria"/>
                         </p:column>
                         <p:column>
-                            <p:selectOneMenu id="categorias">
+                            <p:selectOneMenu id="categorias" value="#{seguimientoBean.categoria.idCategoria}">
                                 <f:selectItem itemLabel="Selecciona una categoria" itemValue="" />
                                 <f:selectItems value="#{seguimientoBean.categorias}" var="cat" itemLabel="#{cat.categoria}" itemValue="#{cat.idCategoria}" />
                             </p:selectOneMenu>
@@ -45,20 +45,22 @@
                             <p:outputLabel for="file" value="Imagen destacada"/>
                         </p:column>
                         <p:column>
-                            <h:inputFile id="file"/>
+                            <h:inputFile id="file" value="#{seguimientoBean.file}"/>
                         </p:column>
                     </p:row>
 
                     <p:row>
                         <p:column colspan="2">
-                            <p:editor />
+                            <p:editor value="#{seguimientoBean.informes.cuerpo}"/>
                         </p:column>
                     </p:row>
 
                     <f:facet name="footer">
                         <p:row>
                             <p:column colspan="2">
-                                <p:commandButton value="Mandar"/>
+                                <h:commandButton action="#{seguimientoBean.crearNoticia}" value="Mandar">
+                                    <f:ajax execute="@all" render="@form"/>
+                                </h:commandButton>
                             </p:column>
                         </p:row>
                     </f:facet>
