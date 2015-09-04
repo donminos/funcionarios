@@ -2,6 +2,7 @@ package mx.gob.jalisco.beans;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -12,6 +13,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.Part;
 import mx.gob.jalisco.entity.Calificaciones;
+import mx.gob.jalisco.entity.EvaluacionesCalificacion;
 import mx.gob.jalisco.entity.Usuarios;
 import mx.gob.jalisco.libs.GenerateRandomName;
 import mx.gob.jalisco.session.UsuariosSessionLocal;
@@ -22,7 +24,7 @@ import mx.gob.jalisco.session.UsuariosSessionLocal;
  */
 @Named(value = "calificarFuncionarioBean")
 @RequestScoped
-public class CalificarFuncionarioBean{
+public class CalificarFuncionarioBean {
 
     @EJB
     private UsuariosSessionLocal usuariosSession;
@@ -66,32 +68,37 @@ public class CalificarFuncionarioBean{
         this.calificacion = calificacion;
     }
 
-    public void handleCrear() {
+    public void handleCrear() throws Exception {
         try {
+            this.construirArchivo();
+            calificacion.setIdUsuarios(usuariosSession.find(funcionario));
+            calificacion.setFuncionarioEvaluado(usuariosSession.find(funcionario));
+            calificacion.setFechaEvaluacion(new Date());
+            calificacion.setEvaluado(new EvaluacionesCalificacion((short)1));
+            calificacionesSession.create(calificacion);
+            calificacion = new Calificaciones();
+            FacesMessage message = new FacesMessage("Succesful", "Se ha mandado tu calificacion");
+            FacesContext.getCurrentInstance().addMessage(null, message);
+        } catch (Exception ex) {
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error Especifico", ex.getMessage()));
+            Logger.getLogger(CalificarFuncionarioBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    public void construirArchivo() throws Exception{
             if (file != null) {
                 GenerateRandomName random = new GenerateRandomName();
-                String namefile=random.Generate() + "." + file.getContentType().split("/")[1];
-                Logger.getLogger(CalificarFuncionarioBean.class.getName()).log(Level.INFO, file.getContentType(), file.getContentType());
-                if (file.getContentType().split("/")[1].equals("jpeg") || file.getContentType().split("/")[1].equals("mp4")) {
+                String archivo=file.getSubmittedFileName();
+                String namefile = random.Generate() + "." + archivo.split("\\.")[1];
+                Logger.getLogger(CalificarFuncionarioBean.class.getName()).log(Level.INFO, file.getSubmittedFileName(), file.getSubmittedFileName());
+                if (archivo.split("\\.")[1].equals("jpg") || archivo.split("\\.")[1].equals("mp4")) {
                     file.write(namefile);
                     calificacion.setArchivo(namefile);
                 } else {
                     FacesContext context = FacesContext.getCurrentInstance();
-                    context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "No es un tipo de archivo valido"));
-                    new IOException("Error archivo");
+                    context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "Tipo de archivo invalido"));
+                    throw new Exception ("El nombre del archivo o extension son incorrectos");
                 }
             }
-            calificacion.setIdUsuarios(usuariosSession.find(funcionario));
-            calificacion.setFuncionarioEvaluado(usuariosSession.find(funcionario));
-            calificacionesSession.create(calificacion);
-            calificacion = new Calificaciones();
-
-            FacesMessage message = new FacesMessage("Succesful", "Se ha mandado tu calificacion");
-            FacesContext.getCurrentInstance().addMessage(null, message);
-        } catch (IOException ex) {
-            FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "Ocurrio un Problema"));
-            Logger.getLogger(CalificarFuncionarioBean.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
 }

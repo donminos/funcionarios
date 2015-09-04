@@ -58,9 +58,14 @@ public class Calificaciones implements Serializable {
     @Size(max = 45)
     @Column(name = "archivo")
     private String archivo;
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "fechaEvaluacion")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaEvaluacion;
+    @JoinColumn(name = "evaluado", referencedColumnName = "idEvaluacionesCalificacion")
+    @ManyToOne(optional = false)
+    private EvaluacionesCalificacion evaluado;
     @JoinColumn(name = "funcionarioEvaluado", referencedColumnName = "idUsuarios")
     @ManyToOne(optional = false)
     private Usuarios funcionarioEvaluado;
@@ -75,10 +80,11 @@ public class Calificaciones implements Serializable {
         this.idCalificaciones = idCalificaciones;
     }
 
-    public Calificaciones(Integer idCalificaciones, short calificacion, String justificacion) {
+    public Calificaciones(Integer idCalificaciones, short calificacion, String justificacion, Date fechaEvaluacion) {
         this.idCalificaciones = idCalificaciones;
         this.calificacion = calificacion;
         this.justificacion = justificacion;
+        this.fechaEvaluacion = fechaEvaluacion;
     }
 
     public Integer getIdCalificaciones() {
@@ -119,6 +125,14 @@ public class Calificaciones implements Serializable {
 
     public void setFechaEvaluacion(Date fechaEvaluacion) {
         this.fechaEvaluacion = fechaEvaluacion;
+    }
+
+    public EvaluacionesCalificacion getEvaluado() {
+        return evaluado;
+    }
+
+    public void setEvaluado(EvaluacionesCalificacion evaluado) {
+        this.evaluado = evaluado;
     }
 
     public Usuarios getFuncionarioEvaluado() {

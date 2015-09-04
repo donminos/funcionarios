@@ -6,7 +6,9 @@
 package mx.gob.jalisco.entity;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,10 +16,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -42,6 +46,8 @@ public class Categorias implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "Categoria")
     private String categoria;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "categoria")
+    private List<InformesNoticias> informesNoticiasList;
 
     public Categorias() {
     }
@@ -69,6 +75,15 @@ public class Categorias implements Serializable {
 
     public void setCategoria(String categoria) {
         this.categoria = categoria;
+    }
+
+    @XmlTransient
+    public List<InformesNoticias> getInformesNoticiasList() {
+        return informesNoticiasList;
+    }
+
+    public void setInformesNoticiasList(List<InformesNoticias> informesNoticiasList) {
+        this.informesNoticiasList = informesNoticiasList;
     }
 
     @Override

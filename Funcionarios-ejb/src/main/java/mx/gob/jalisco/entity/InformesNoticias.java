@@ -60,9 +60,13 @@ public class InformesNoticias implements Serializable {
     @Size(max = 45)
     @Column(name = "tituloImagen")
     private String tituloImagen;
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "fechaCreacion")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaCreacion;
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "fechaModificacion")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaModificacion;
@@ -80,10 +84,12 @@ public class InformesNoticias implements Serializable {
         this.idInforme = idInforme;
     }
 
-    public InformesNoticias(Integer idInforme, String titulo, String cuerpo) {
+    public InformesNoticias(Integer idInforme, String titulo, String cuerpo, Date fechaCreacion, Date fechaModificacion) {
         this.idInforme = idInforme;
         this.titulo = titulo;
         this.cuerpo = cuerpo;
+        this.fechaCreacion = fechaCreacion;
+        this.fechaModificacion = fechaModificacion;
     }
 
     public Integer getIdInforme() {

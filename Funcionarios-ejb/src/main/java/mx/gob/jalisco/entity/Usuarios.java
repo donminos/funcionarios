@@ -67,6 +67,8 @@ public class Usuarios implements Serializable {
     private List<Calificaciones> calificacionesList1;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "idUsuarios")
     private DatosFuncionarios datosFuncionarios;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "funcionario")
+    private List<InformesNoticias> informesNoticiasList;
 
     public Usuarios() {
     }
@@ -138,6 +140,15 @@ public class Usuarios implements Serializable {
 
     public void setDatosFuncionarios(DatosFuncionarios datosFuncionarios) {
         this.datosFuncionarios = datosFuncionarios;
+    }
+
+    @XmlTransient
+    public List<InformesNoticias> getInformesNoticiasList() {
+        return informesNoticiasList;
+    }
+
+    public void setInformesNoticiasList(List<InformesNoticias> informesNoticiasList) {
+        this.informesNoticiasList = informesNoticiasList;
     }
 
     @Override
