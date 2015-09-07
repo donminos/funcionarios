@@ -1,10 +1,12 @@
-
 package mx.gob.jalisco.session;
 
+import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import mx.gob.jalisco.catalog.Evaluaciones;
 import mx.gob.jalisco.entity.Calificaciones;
+import mx.gob.jalisco.entity.EvaluacionesCalificacion;
 import mx.gob.jalisco.facade.CalificacionesFacadeLocal;
 
 /**
@@ -13,11 +15,14 @@ import mx.gob.jalisco.facade.CalificacionesFacadeLocal;
  */
 @Stateless
 public class CalificacionesSession implements CalificacionesSessionLocal {
+
     @EJB
     private CalificacionesFacadeLocal calificacionesFacade;
 
     @Override
     public void create(Calificaciones calificaciones) {
+        calificaciones.setEvaluado(new EvaluacionesCalificacion(Evaluaciones.SINREVISAR.getDato()));
+        calificaciones.setFechaEvaluacion(new Date());
         calificacionesFacade.create(calificaciones);
     }
 

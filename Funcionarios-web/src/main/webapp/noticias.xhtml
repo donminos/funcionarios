@@ -13,20 +13,12 @@
         <f:metadata>
             <f:viewParam name="noticiaId" value="#{noticiasBean.noticiaId}" />
         </f:metadata>
-        <p:panelGrid class="noticiaPanel">
+        <h:panelGrid columns="1" class="noticiaPanel">
             <f:facet name="header">
-                <p:row>
-                    <p:column>
-                        <p:outputLabel value="#{noticiasBean.noticia.titulo}" escape="false"/>
-                </p:column>
-                </p:row>
+                <p:outputLabel value="#{noticiasBean.noticia.titulo}" escape="false"/>
             </f:facet>
-            <p:row>
-                <p:column>
-                    <p:outputLabel value="#{noticiasBean.noticia.cuerpo}" escape="false"/>
-                </p:column>
-            </p:row>
-        </p:panelGrid>
+            <p:outputLabel value="#{noticiasBean.noticia.cuerpo}" escape="false"/>
+        </h:panelGrid>
     </h:body>
 </html>
 

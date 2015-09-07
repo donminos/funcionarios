@@ -21,6 +21,7 @@
 .noticiaPanel {
     margin: 0 auto;
     width: 75%;
+    max-width: 75%;
 }
 .ui-panelgrid .ui-panelgrid-cell{
     float: none !important;

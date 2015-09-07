@@ -53,7 +53,7 @@ public class Usuarios implements Serializable {
     private String correo;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 60)
+    @Size(min = 1, max = 64)
     @Column(name = "contrasena")
     private String contrasena;
     @JoinTable(name = "UsuarioRol", joinColumns = {
@@ -66,7 +66,7 @@ public class Usuarios implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUsuarios")
     private List<Calificaciones> calificacionesList1;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "idUsuarios")
-    private DatosFuncionarios datosFuncionarios;
+    private DatosUsuario datosUsuario;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "funcionario")
     private List<InformesNoticias> informesNoticiasList;
 
@@ -134,12 +134,12 @@ public class Usuarios implements Serializable {
         this.calificacionesList1 = calificacionesList1;
     }
 
-    public DatosFuncionarios getDatosFuncionarios() {
-        return datosFuncionarios;
+    public DatosUsuario getDatosUsuario() {
+        return datosUsuario;
     }
 
-    public void setDatosFuncionarios(DatosFuncionarios datosFuncionarios) {
-        this.datosFuncionarios = datosFuncionarios;
+    public void setDatosUsuario(DatosUsuario datosUsuario) {
+        this.datosUsuario = datosUsuario;
     }
 
     @XmlTransient

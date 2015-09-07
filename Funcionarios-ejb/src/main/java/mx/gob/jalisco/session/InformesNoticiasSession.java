@@ -5,6 +5,7 @@
  */
 package mx.gob.jalisco.session;
 
+import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -22,6 +23,8 @@ public class InformesNoticiasSession implements InformesNoticiasSessionLocal {
 
     @Override
     public void create(InformesNoticias informesNoticias) {
+        informesNoticias.setFechaCreacion(new Date());
+        informesNoticias.setFechaModificacion(new Date());
         informesNoticiasFacade.create(informesNoticias);
     }
 

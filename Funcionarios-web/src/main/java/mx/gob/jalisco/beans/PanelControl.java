@@ -2,19 +2,23 @@ package mx.gob.jalisco.beans;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
+import mx.gob.jalisco.catalog.Evaluaciones;
 import mx.gob.jalisco.entity.Calificaciones;
+import mx.gob.jalisco.entity.EvaluacionesCalificacion;
 import mx.gob.jalisco.session.CalificacionesSessionLocal;
-import org.primefaces.model.DefaultStreamedContent;
-import org.primefaces.model.StreamedContent;
+import mx.gob.jalisco.session.EvaluacionesCalificacionSessionLocal;
 
 /**
  *
@@ -23,56 +27,73 @@ import org.primefaces.model.StreamedContent;
 @Named(value = "panelControl")
 @RequestScoped
 public class PanelControl {
-
-    public enum Evaluacion {
-
-        SINREVISAR((short)1),
-        ACEPTADP((short)2),
-        RECHAZADO((short)3);
-        private short value; // Variable interna donde almacenaremos
-
-        // Nuestro constructor nos fuerza a pasar parámetros al definir un nuevo tipo
-        Evaluacion(short value) {
-            this.value = value;
-        }
-        // Devuelve la capacidad del vaso
-        public short getDato() {
-            return value;
-        }
-    }
+    @EJB
+    private EvaluacionesCalificacionSessionLocal evaluacionesCalificacionSession;
+    
     @EJB
     private CalificacionesSessionLocal calificacionesSession;
-    private StreamedContent file;
-    public PanelControl() throws FileNotFoundException {//Esconder los archivos de las calificaciones y cargar para todos los demas 
-        File archivo = new File("/home/ceasar/NetBeansProjects/Funcionarios/Funcionarios-web/src/main/webapp/resources/imagenes/QW8T2PBCGM867ONUXQMK28E8TL7MQTZEKXZOSBCZB.jpg");
-        InputStream stream=new FileInputStream(archivo);
-        file=new DefaultStreamedContent(stream,"",archivo.getName());
+    
+    private short evaluacion;
+    
+    public PanelControl() {
     }
 
-    public StreamedContent getFile() {
-        return file;
+    public short getEvaluacion() {
+        return evaluacion;
     }
 
-    public void setFile(StreamedContent file) {
-        this.file = file;
+    public void setEvaluacion(short evaluacion) {
+        this.evaluacion = evaluacion;
+    }
+
+    public List<EvaluacionesCalificacion> getEvaluaciones(){
+        return evaluacionesCalificacionSession.findAll();
     }
     
     public List<Calificaciones> getCalificaciones() {
         List<Calificaciones> calificaciones = calificacionesSession.findAll();
         List<Calificaciones> calificacionessincalificar = new ArrayList();
         for (Calificaciones calificacione : calificaciones) {
-            if (Evaluacion.SINREVISAR.getDato() == calificacione.getEvaluado().getIdEvaluacionesCalificacion()) {
+            if (Evaluaciones.SINREVISAR.getDato() == calificacione.getEvaluado().getIdEvaluacionesCalificacion()) {
                 calificacionessincalificar.add(calificacione);
             }
         }
-        Collections.sort(calificacionessincalificar, new Comparator<Calificaciones>() {
-            @Override
-            public int compare(Calificaciones o1, Calificaciones o2) {
-                return o1.getIdCalificaciones().compareTo(o2.getIdCalificaciones());
-            }
-        });
-        Collections.reverse(calificacionessincalificar);
-        return calificacionesSession.findAll();
+        Collections.reverse(calificaciones);
+        return calificacionessincalificar;
     }
 
+    public void downloadFile(String data) {
+        File file = new File("/home/ceasar/NetBeansProjects/Funcionarios/Funcionarios-web/src/main/webapp/resources/imagenes/" + data);
+        HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+        response.setHeader("Content-Disposition", "attachment;filename=" + data);
+        response.setContentLength((int) file.length());
+        ServletOutputStream out = null;
+        try {
+            FileInputStream input = new FileInputStream(file);
+            byte[] buffer = new byte[1024];
+            out = response.getOutputStream();
+            int i = 0;
+            while ((i = input.read(buffer)) != -1) {
+                out.write(buffer);
+                out.flush();
+            }
+            FacesContext.getCurrentInstance().getResponseComplete();
+        } catch (IOException err) {
+            err.printStackTrace();
+        } finally {
+            try {
+                if (out != null) {
+                    out.close();
+                }
+            } catch (IOException err) {
+                err.printStackTrace();
+            }
+        }
+    }
+    public void cambiarCalificacion(Calificaciones calif){
+        calif.setEvaluado(new EvaluacionesCalificacion(evaluacion));
+        calificacionesSession.edit(calif);
+        FacesMessage message = new FacesMessage("Succesful", "Se ha evaluado la calificacion del funcionario");
+        FacesContext.getCurrentInstance().addMessage(null, message);
+    }
 }

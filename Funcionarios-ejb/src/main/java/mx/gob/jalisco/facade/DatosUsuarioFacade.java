@@ -8,14 +8,14 @@ package mx.gob.jalisco.facade;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import mx.gob.jalisco.entity.DatosFuncionarios;
+import mx.gob.jalisco.entity.DatosUsuario;
 
 /**
  *
  * @author Carlos Cesar Rosas
  */
 @Stateless
-public class DatosFuncionariosFacade extends AbstractFacade<DatosFuncionarios> implements DatosFuncionariosFacadeLocal {
+public class DatosUsuarioFacade extends AbstractFacade<DatosUsuario> implements DatosUsuarioFacadeLocal {
     @PersistenceContext(unitName = "Funcionarios-ejb_1.0-SNAPSHOTPU")
     private EntityManager em;
 
@@ -24,8 +24,8 @@ public class DatosFuncionariosFacade extends AbstractFacade<DatosFuncionarios> i
         return em;
     }
 
-    public DatosFuncionariosFacade() {
-        super(DatosFuncionarios.class);
+    public DatosUsuarioFacade() {
+        super(DatosUsuario.class);
     }
     
 }

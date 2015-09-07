@@ -10,11 +10,28 @@
     </h:head>
     <h:body>
         <f:view>
-            <p:panelGrid columns="2">
-                <p:link outcome="usuarios/calificarFuncionario" value="calificacion"/>
-                <p:link outcome="funcionarios/seguimiento" value="funcionario"/>
-                <p:link outcome="administradores/panelControl" value="admin"/>
+            <p:panelGrid id="menu" columns="3">
+                <p:link outcome="usuarios/calificarFuncionario" value="calificacion" rendered="#{request.isUserInRole('USUARIO')}"/>
+                <p:link outcome="funcionarios/seguimiento" value="funcionario" rendered="#{request.isUserInRole('FUNCIONARIO')}"/>
+                <p:link outcome="administradores/panelControl" value="admin" rendered="#{request.isUserInRole('ADMINISTRADOR')}"/>
             </p:panelGrid>
+            <h2>Accesar</h2> 
+            <h:form id="login" rendered="#{!request.isUserInRole('USUARIO') and !request.isUserInRole('FUNCIONARIO') and !request.isUserInRole('ADMINISTRADOR')}">
+                <p:panelGrid columns="2">
+                    <p:outputLabel for="user" value="Usuario"/>
+                    <p:inputText id="user" value="#{authenticationBean.usuario}" required="true" requiredMessage="Es necesario el usuario"/>
+
+                    <p:outputLabel for="pass" value="Contraseña"/>
+                    <p:password id="pass" value="#{authenticationBean.contrasena}" required="true" requiredMessage="Es necesario la contraseña"/>
+
+                    <p:commandButton value="Accesar" ajax="false" action="#{authenticationBean.login()}"/>
+                </p:panelGrid>
+            </h:form>
+
+            <h:form id="deslogin" rendered="#{request.isUserInRole('USUARIO') or request.isUserInRole('FUNCIONARIO') or request.isUserInRole('ADMINISTRADOR')}">
+                <p:commandButton value="deslogeo" ajax="false" action="#{authenticationBean.logout()}"/>
+            </h:form>
+
             <h:form> 
                 <p:dataScroller value="#{indexBean.informesnoticias}" var="info" chunkSize="10">
                     <f:facet name="header">
@@ -36,7 +53,7 @@
                                             <h:outputText value="Categoria:#{info.categoria.categoria}" style="font-weight: bold"/>
                                         </p:column>
                                         <p:column>
-                                            <h:outputText value="Funcionario:#{info.funcionario.datosFuncionarios.nombre} #{info.funcionario.datosFuncionarios.apellidoP} #{info.funcionario.datosFuncionarios.apellidoM}" style="font-weight: bold"/>
+                                            <h:outputText value="Funcionario:#{info.funcionario.datosUsuario.nombreCompleto}" style="font-weight: bold"/>
                                         </p:column>
                                     </p:row>
                                     <p:row>
@@ -57,6 +74,7 @@
                     </p:panelGrid>
                 </p:dataScroller>
             </h:form>
+            <p:growl id="growl" showDetail="true" globalOnly="true" life="1000" />  
         </f:view>
     </h:body>
 </html>

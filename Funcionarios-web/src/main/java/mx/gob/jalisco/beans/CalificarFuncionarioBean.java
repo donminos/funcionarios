@@ -11,6 +11,7 @@ import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.Part;
 import mx.gob.jalisco.entity.Calificaciones;
 import mx.gob.jalisco.entity.EvaluacionesCalificacion;
@@ -69,18 +70,17 @@ public class CalificarFuncionarioBean {
     }
 
     public void handleCrear() throws Exception {
+        FacesContext context = FacesContext.getCurrentInstance();
+        HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
         try {
             this.construirArchivo();
-            calificacion.setIdUsuarios(usuariosSession.find(funcionario));
+            calificacion.setIdUsuarios(usuariosSession.findEmail(String.valueOf(request.getUserPrincipal())));
             calificacion.setFuncionarioEvaluado(usuariosSession.find(funcionario));
-            calificacion.setFechaEvaluacion(new Date());
-            calificacion.setEvaluado(new EvaluacionesCalificacion((short)1));
             calificacionesSession.create(calificacion);
             calificacion = new Calificaciones();
             FacesMessage message = new FacesMessage("Succesful", "Se ha mandado tu calificacion");
             FacesContext.getCurrentInstance().addMessage(null, message);
         } catch (Exception ex) {
-            FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error Especifico", ex.getMessage()));
             Logger.getLogger(CalificarFuncionarioBean.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -91,7 +91,7 @@ public class CalificarFuncionarioBean {
                 String archivo=file.getSubmittedFileName();
                 String namefile = random.Generate() + "." + archivo.split("\\.")[1];
                 Logger.getLogger(CalificarFuncionarioBean.class.getName()).log(Level.INFO, file.getSubmittedFileName(), file.getSubmittedFileName());
-                if (archivo.split("\\.")[1].equals("jpg") || archivo.split("\\.")[1].equals("mp4")) {
+                if (archivo.split("\\.")[1].equals("jpg") || archivo.split("\\.")[1].equals("mp4")  || archivo.split("\\.")[1].equals("pdf")) {
                     file.write(namefile);
                     calificacion.setArchivo(namefile);
                 } else {

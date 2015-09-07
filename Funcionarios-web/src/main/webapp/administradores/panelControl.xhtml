@@ -9,7 +9,7 @@
     </h:head>
     <h:body>
         <f:view>
-            <h:form>
+            <h:form id="calificacionesUsuarios">
                 <h1><h:outputText value="List"/></h1>
                 <p:dataTable value="#{panelControl.calificaciones}" var="item">
                     <p:column>
@@ -23,30 +23,13 @@
                             <h:outputText value="Justificacion"/>
                         </f:facet>
                         <h:outputText value="#{item.justificacion}"/>
+                        <h:outputText value="Leerlo"/>
                     </p:column>
                     <p:column>
                         <f:facet name="header">
-                            <h:outputText value="Archivo"/>
+                            <h:outputLabel value="Archivo a revisar"/>
                         </f:facet>
-                        <p:dialog modal="true" widgetVar="statusDialog" header="Status" draggable="false" closable="false" resizable="false">
-                            <p:graphicImage name="/demo/images/ajaxloadingbar.gif" />
-                        </p:dialog>
-
-                        <h:form>
-                            <p:commandButton value="Download" ajax="false" onclick="PrimeFaces.monitorDownload(start, stop);" icon="ui-icon-arrowthick-1-s">
-                                <p:fileDownload value="#{panelControl.file}" />
-                            </p:commandButton>
-                        </h:form>
-
-                        <script type="text/javascript">
-                            function start() {
-                                PF('statusDialog').show();
-                            }
-
-                            function stop() {
-                                PF('statusDialog').hide();
-                            }
-                        </script>
+                        <h:commandButton value="Download" action="#{panelControl.downloadFile(item.archivo)}" disabled="#{item.archivo==null}" />
                     </p:column>
                     <p:column>
                         <f:facet name="header">
@@ -60,15 +43,26 @@
                         <f:facet name="header">
                             <h:outputText value="FuncionarioEvaluado"/>
                         </f:facet>
-                        <h:outputText value="#{item.funcionarioEvaluado}"/>
+                        <h:outputText value="#{item.funcionarioEvaluado.datosUsuario.nombreCompleto}"/>
                     </p:column>
                     <p:column>
                         <f:facet name="header">
-                            <h:outputText value="IdUsuarios"/>
+                            <h:outputText value="Usuarios"/>
                         </f:facet>
-                        <h:outputText value="#{item.idUsuarios}"/>
+                        <h:outputText value="#{item.idUsuarios.datosUsuario.nombreCompleto}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Evaluación"/>
+                        </f:facet>
+                        <p:selectOneMenu id="evaluacionSelect" value="#{panelControl.evaluacion}">
+                            <f:selectItem itemLabel="#{item.evaluado.descripcion}"/>
+                            <f:selectItems value="#{panelControl.evaluaciones}" var="eva" itemLabel="#{eva.descripcion}" itemValue="#{eva.idEvaluacionesCalificacion}"/>
+                            <p:ajax event="change" listener="#{panelControl.cambiarCalificacion(item)}" update="calificacionesUsuarios"/>
+                        </p:selectOneMenu>
                     </p:column>
                 </p:dataTable>
+                <p:growl id="messages" showDetail="true" life="10000" />
             </h:form>
         </f:view>
     </h:body>

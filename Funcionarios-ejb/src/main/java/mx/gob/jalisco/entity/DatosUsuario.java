@@ -26,15 +26,16 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Carlos Cesar Rosas
  */
 @Entity
-@Table(name = "DatosFuncionarios")
+@Table(name = "DatosUsuario")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "DatosFuncionarios.findAll", query = "SELECT d FROM DatosFuncionarios d"),
-    @NamedQuery(name = "DatosFuncionarios.findByIdDatosFuncionarios", query = "SELECT d FROM DatosFuncionarios d WHERE d.idDatosFuncionarios = :idDatosFuncionarios"),
-    @NamedQuery(name = "DatosFuncionarios.findByNombre", query = "SELECT d FROM DatosFuncionarios d WHERE d.nombre = :nombre"),
-    @NamedQuery(name = "DatosFuncionarios.findByApellidoP", query = "SELECT d FROM DatosFuncionarios d WHERE d.apellidoP = :apellidoP"),
-    @NamedQuery(name = "DatosFuncionarios.findByApellidoM", query = "SELECT d FROM DatosFuncionarios d WHERE d.apellidoM = :apellidoM")})
-public class DatosFuncionarios implements Serializable {
+    @NamedQuery(name = "DatosUsuario.findAll", query = "SELECT d FROM DatosUsuario d"),
+    @NamedQuery(name = "DatosUsuario.findByIdDatosFuncionarios", query = "SELECT d FROM DatosUsuario d WHERE d.idDatosFuncionarios = :idDatosFuncionarios"),
+    @NamedQuery(name = "DatosUsuario.findByNombre", query = "SELECT d FROM DatosUsuario d WHERE d.nombre = :nombre"),
+    @NamedQuery(name = "DatosUsuario.findByApellidoP", query = "SELECT d FROM DatosUsuario d WHERE d.apellidoP = :apellidoP"),
+    @NamedQuery(name = "DatosUsuario.findByApellidoM", query = "SELECT d FROM DatosUsuario d WHERE d.apellidoM = :apellidoM")})
+public class DatosUsuario implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -60,14 +61,14 @@ public class DatosFuncionarios implements Serializable {
     @OneToOne(optional = false)
     private Usuarios idUsuarios;
 
-    public DatosFuncionarios() {
+    public DatosUsuario() {
     }
 
-    public DatosFuncionarios(Integer idDatosFuncionarios) {
+    public DatosUsuario(Integer idDatosFuncionarios) {
         this.idDatosFuncionarios = idDatosFuncionarios;
     }
 
-    public DatosFuncionarios(Integer idDatosFuncionarios, String nombre, String apellidoP, String apellidoM) {
+    public DatosUsuario(Integer idDatosFuncionarios, String nombre, String apellidoP, String apellidoM) {
         this.idDatosFuncionarios = idDatosFuncionarios;
         this.nombre = nombre;
         this.apellidoP = apellidoP;
@@ -114,6 +115,10 @@ public class DatosFuncionarios implements Serializable {
         this.idUsuarios = idUsuarios;
     }
 
+    public String getNombreCompleto() {
+        return this.nombre + " " + this.apellidoP + " " + this.apellidoM;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -124,10 +129,10 @@ public class DatosFuncionarios implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof DatosFuncionarios)) {
+        if (!(object instanceof DatosUsuario)) {
             return false;
         }
-        DatosFuncionarios other = (DatosFuncionarios) object;
+        DatosUsuario other = (DatosUsuario) object;
         if ((this.idDatosFuncionarios == null && other.idDatosFuncionarios != null) || (this.idDatosFuncionarios != null && !this.idDatosFuncionarios.equals(other.idDatosFuncionarios))) {
             return false;
         }
@@ -136,7 +141,7 @@ public class DatosFuncionarios implements Serializable {
 
     @Override
     public String toString() {
-        return "mx.gob.jalisco.entity.DatosFuncionarios[ idDatosFuncionarios=" + idDatosFuncionarios + " ]";
+        return "mx.gob.jalisco.entity.DatosUsuario[ idDatosFuncionarios=" + idDatosFuncionarios + " ]";
     }
-    
+
 }

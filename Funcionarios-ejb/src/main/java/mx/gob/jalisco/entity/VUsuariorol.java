@@ -45,7 +45,7 @@ public class VUsuariorol implements Serializable {
     private String correo;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 60)
+    @Size(min = 1, max = 64)
     @Column(name = "Contrasena")
     private String contrasena;
     @Basic(optional = false)

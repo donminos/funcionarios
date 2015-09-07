@@ -18,6 +18,8 @@ public interface UsuariosSessionLocal {
     public void remove(Usuarios usuarios);
 
     public Usuarios find(Object id);
+    
+    public Usuarios findEmail(String email);
 
     public List<Usuarios> findAll();
 

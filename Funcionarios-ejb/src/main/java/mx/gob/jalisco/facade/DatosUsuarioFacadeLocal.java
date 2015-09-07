@@ -7,28 +7,26 @@ package mx.gob.jalisco.facade;
 
 import java.util.List;
 import javax.ejb.Local;
-import mx.gob.jalisco.entity.Usuarios;
+import mx.gob.jalisco.entity.DatosUsuario;
 
 /**
  *
  * @author Carlos Cesar Rosas
  */
 @Local
-public interface UsuariosFacadeLocal {
+public interface DatosUsuarioFacadeLocal {
 
-    void create(Usuarios usuarios);
+    void create(DatosUsuario datosUsuario);
 
-    void edit(Usuarios usuarios);
+    void edit(DatosUsuario datosUsuario);
 
-    void remove(Usuarios usuarios);
+    void remove(DatosUsuario datosUsuario);
 
-    Usuarios find(Object id);
-    
-    Usuarios findEmailUser(String email);
+    DatosUsuario find(Object id);
 
-    List<Usuarios> findAll();
+    List<DatosUsuario> findAll();
 
-    List<Usuarios> findRange(int[] range);
+    List<DatosUsuario> findRange(int[] range);
 
     int count();
     
