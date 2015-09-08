@@ -8,6 +8,7 @@ package mx.gob.jalisco.facade;
 import java.util.List;
 import javax.ejb.Local;
 import mx.gob.jalisco.entity.Calificaciones;
+import mx.gob.jalisco.entity.Usuarios;
 
 /**
  *
@@ -23,6 +24,8 @@ public interface CalificacionesFacadeLocal {
     void remove(Calificaciones calificaciones);
 
     Calificaciones find(Object id);
+    
+    List<Calificaciones> findForUser(Usuarios usuario);
 
     List<Calificaciones> findAll();
 

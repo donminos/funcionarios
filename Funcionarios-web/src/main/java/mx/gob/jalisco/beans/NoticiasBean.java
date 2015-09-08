@@ -22,8 +22,11 @@ public class NoticiasBean {
     private InformesNoticiasSessionLocal informesNoticiasSession;
     
     private Integer noticiaId;
+    
+    private InformesNoticias noticia;
 
     public NoticiasBean() {
+        noticia=new InformesNoticias();
     }
 
     public Integer getNoticiaId() {
@@ -35,7 +38,16 @@ public class NoticiasBean {
     }
     
     public InformesNoticias getNoticia(){
-        return informesNoticiasSession.find(noticiaId);
+        noticia=informesNoticiasSession.find(noticiaId);
+        return noticia;
     }
-
+    
+    public void setNoticia(InformesNoticias noticia){
+        this.noticia=noticia;
+    }
+    
+    
+    public void modificarNoticia(){
+        informesNoticiasSession.edit(noticia);
+    }
 }

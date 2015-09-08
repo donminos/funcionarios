@@ -13,12 +13,20 @@
         <f:metadata>
             <f:viewParam name="noticiaId" value="#{noticiasBean.noticiaId}" />
         </f:metadata>
-        <h:panelGrid columns="1" class="noticiaPanel">
-            <f:facet name="header">
-                <p:outputLabel value="#{noticiasBean.noticia.titulo}" escape="false"/>
-            </f:facet>
-            <p:outputLabel value="#{noticiasBean.noticia.cuerpo}" escape="false"/>
-        </h:panelGrid>
+        <h:form>
+            <p:panelGrid columns="1" class="noticiaPanel">
+                <f:facet name="header">
+                    <p:outputLabel value="#{noticiasBean.noticia.titulo}" escape="false" rendered="#{!request.isUserInRole('FUNCIONARIO')}"/>
+
+                    <p:inputText value="#{noticiasBean.noticia.titulo}" required="true" label="text" rendered="#{request.isUserInRole('FUNCIONARIO')}"/>
+                </f:facet>
+                <p:outputLabel value="#{noticiasBean.noticia.cuerpo}" escape="false" rendered="#{!request.isUserInRole('FUNCIONARIO')}"/>
+                <p:editor value="#{noticiasBean.noticia.cuerpo}" required="true" requiredMessage="Es necesario el cuerpo del la noticia" rendered="#{request.isUserInRole('FUNCIONARIO')}"/>
+                <f:facet name="footer">
+                    <p:commandButton value="Modificar" ajax="false" action="#{noticiasBean.modificarNoticia()}" rendered="#{request.isUserInRole('FUNCIONARIO')}"/>
+                </f:facet>
+            </p:panelGrid>
+        </h:form>
     </h:body>
 </html>
 

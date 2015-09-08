@@ -8,6 +8,7 @@ package mx.gob.jalisco.session;
 import java.util.List;
 import javax.ejb.Local;
 import mx.gob.jalisco.entity.Calificaciones;
+import mx.gob.jalisco.entity.Usuarios;
 
 /**
  *
@@ -23,6 +24,8 @@ public interface CalificacionesSessionLocal {
     public void remove(Calificaciones calificaciones);
 
     public Calificaciones find(Object id);
+    
+    public List<Calificaciones> findForUser(Usuarios usuario);
 
     public List<Calificaciones> findAll();
 

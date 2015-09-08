@@ -60,7 +60,7 @@
         <web-resource-collection>
             <web-resource-name>administradorOnly</web-resource-name>
             <description/>
-            <url-pattern>/administrador/*</url-pattern>
+            <url-pattern>/administradores/*</url-pattern>
         </web-resource-collection>
         <auth-constraint>
             <description/>
@@ -72,7 +72,7 @@
         <web-resource-collection>
             <web-resource-name>FuncionarioOnly</web-resource-name>
             <description/>
-            <url-pattern>/funcionario/*</url-pattern>
+            <url-pattern>/funcionarios/*</url-pattern>
         </web-resource-collection>
         <auth-constraint>
             <description/>

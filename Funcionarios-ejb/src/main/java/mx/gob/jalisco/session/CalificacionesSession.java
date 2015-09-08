@@ -7,6 +7,7 @@ import javax.ejb.Stateless;
 import mx.gob.jalisco.catalog.Evaluaciones;
 import mx.gob.jalisco.entity.Calificaciones;
 import mx.gob.jalisco.entity.EvaluacionesCalificacion;
+import mx.gob.jalisco.entity.Usuarios;
 import mx.gob.jalisco.facade.CalificacionesFacadeLocal;
 
 /**
@@ -39,6 +40,11 @@ public class CalificacionesSession implements CalificacionesSessionLocal {
     @Override
     public Calificaciones find(Object id) {
         return calificacionesFacade.find(id);
+    }
+
+    @Override
+    public List<Calificaciones> findForUser(Usuarios usuario) {
+        return calificacionesFacade.findForUser(usuario);
     }
 
     @Override

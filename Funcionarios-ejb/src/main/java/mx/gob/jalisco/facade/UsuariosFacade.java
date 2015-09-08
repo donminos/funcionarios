@@ -8,6 +8,7 @@ package mx.gob.jalisco.facade;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
@@ -35,17 +36,10 @@ public class UsuariosFacade extends AbstractFacade<Usuarios> implements Usuarios
 
     @Override
     public Usuarios findEmailUser(String email) {
-        CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
-        CriteriaQuery<Usuarios> criteriaQuery = criteriaBuilder.createQuery(Usuarios.class);
-        Root<Usuarios> from = criteriaQuery.from(Usuarios.class);
-        Predicate condition = criteriaBuilder.equal(from.get("privilegeLevel"), 5);
-        criteriaQuery.select(from).where(condition).orderBy(criteriaBuilder.asc(from.get("userId")));
-
-        Usuarios result = em.createQuery(criteriaQuery).getSingleResult();
-        /*Query query = entityManager.createQuery("SELECT u FROM Usuarios u WHERE u.usuario = :usuario", Usuarios.class);
-         query.setParameter("usuario", usuario.getUsuario());
-         Usuarios u = (Usuarios) query.getSingleResult();*/
-        return result;
+        Query query = em.createQuery("SELECT u FROM Usuarios u WHERE u.correo = :usuario", Usuarios.class);
+         query.setParameter("usuario", email);
+         Usuarios u = (Usuarios) query.getSingleResult();
+        return u;
     }
 
 }

@@ -15,8 +15,9 @@
                 <p:link outcome="funcionarios/seguimiento" value="funcionario" rendered="#{request.isUserInRole('FUNCIONARIO')}"/>
                 <p:link outcome="administradores/panelControl" value="admin" rendered="#{request.isUserInRole('ADMINISTRADOR')}"/>
             </p:panelGrid>
-            <h2>Accesar</h2> 
+            <p:panelGrid columns="2" layout="grid">
             <h:form id="login" rendered="#{!request.isUserInRole('USUARIO') and !request.isUserInRole('FUNCIONARIO') and !request.isUserInRole('ADMINISTRADOR')}">
+                <p:outputLabel value="Accesar"/>
                 <p:panelGrid columns="2">
                     <p:outputLabel for="user" value="Usuario"/>
                     <p:inputText id="user" value="#{authenticationBean.usuario}" required="true" requiredMessage="Es necesario el usuario"/>
@@ -27,11 +28,15 @@
                     <p:commandButton value="Accesar" ajax="false" action="#{authenticationBean.login()}"/>
                 </p:panelGrid>
             </h:form>
+            
+                <p:panelGrid>
+                    charts
+                </p:panelGrid>
 
             <h:form id="deslogin" rendered="#{request.isUserInRole('USUARIO') or request.isUserInRole('FUNCIONARIO') or request.isUserInRole('ADMINISTRADOR')}">
-                <p:commandButton value="deslogeo" ajax="false" action="#{authenticationBean.logout()}"/>
+                <p:commandButton value="Salir" ajax="false" action="#{authenticationBean.logout()}"/>
             </h:form>
-
+            </p:panelGrid>
             <h:form> 
                 <p:dataScroller value="#{indexBean.informesnoticias}" var="info" chunkSize="10">
                     <f:facet name="header">
