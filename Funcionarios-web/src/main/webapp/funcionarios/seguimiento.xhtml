@@ -61,6 +61,7 @@
                                 <h:commandButton action="#{seguimientoBean.crearNoticia}" value="Mandar">
                                     <f:ajax execute="@all" render="@form"/>
                                 </h:commandButton>
+                                <h:commandButton action="/index.jsf?faces-redirect=true" immediate="true" value="Atras" />
                             </p:column>
                         </p:row>
                     </f:facet>

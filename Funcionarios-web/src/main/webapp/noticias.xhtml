@@ -23,9 +23,11 @@
                 <p:outputLabel value="#{noticiasBean.noticia.cuerpo}" escape="false" rendered="#{!request.isUserInRole('FUNCIONARIO')}"/>
                 <p:editor value="#{noticiasBean.noticia.cuerpo}" required="true" requiredMessage="Es necesario el cuerpo del la noticia" rendered="#{request.isUserInRole('FUNCIONARIO')}"/>
                 <f:facet name="footer">
-                    <p:commandButton value="Modificar" ajax="false" action="#{noticiasBean.modificarNoticia()}" rendered="#{request.isUserInRole('FUNCIONARIO')}"/>
+                    <p:commandButton value="Modificar" action="#{noticiasBean.modificarNoticia()}" update="messages" rendered="#{request.isUserInRole('FUNCIONARIO')}"/>
+                    <p:commandButton value="Atras" ajax="false" action="index.jsf?faces-redirect=true"/>
                 </f:facet>
             </p:panelGrid>
+            <p:growl id="messages" showDetail="true" life="10000" />
         </h:form>
     </h:body>
 </html>

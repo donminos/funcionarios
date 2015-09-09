@@ -10,8 +10,8 @@
     <h:body>
         <f:view>
             <h:form id="calificacionesUsuarios">
-                <h1><h:outputText value="List"/></h1>
-                <p:dataTable value="#{panelControl.calificaciones}" var="item">
+                <h1><h:outputText value="Calificaciones por atender"/></h1>
+                <p:dataTable reflow="true" rows="5" paginator="true" value="#{panelControl.calificaciones}" var="item">
                     <p:column>
                         <f:facet name="header">
                             <h:outputText value="Calificacion"/>
@@ -22,8 +22,7 @@
                         <f:facet name="header">
                             <h:outputText value="Justificacion"/>
                         </f:facet>
-                        <h:outputText value="#{item.justificacion}"/>
-                        <h:outputText value="Leerlo"/>
+                        <p:rowToggler />
                     </p:column>
                     <p:column>
                         <f:facet name="header">
@@ -61,6 +60,15 @@
                             <p:ajax event="change" listener="#{panelControl.cambiarCalificacion(item)}" update="calificacionesUsuarios"/>
                         </p:selectOneMenu>
                     </p:column>
+                    <f:facet name="footer">
+                        <h:commandButton action="/index.jsf?faces-redirect=true" immediate="true" value="Atras" />
+                    </f:facet>
+                    <p:rowExpansion>
+                        <p:panelGrid  columns="1" columnClasses="label,value" style="width:100%">
+                            <h:outputText value="Justificacion:" />
+                            <h:outputText style="word-wrap:break-word;" value="#{item.justificacion}" />
+                        </p:panelGrid>
+                    </p:rowExpansion>
                 </p:dataTable>
                 <p:growl id="messages" showDetail="true" life="10000" />
             </h:form>

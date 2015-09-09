@@ -1,5 +1,6 @@
 package mx.gob.jalisco.beans;
 
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -8,6 +9,7 @@ import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import mx.gob.jalisco.entity.InformesNoticias;
 import mx.gob.jalisco.session.InformesNoticiasSessionLocal;
+import org.primefaces.model.chart.PieChartModel;
 
 /**
  *
@@ -15,13 +17,28 @@ import mx.gob.jalisco.session.InformesNoticiasSessionLocal;
  */
 @Named(value = "indexBean")
 @RequestScoped
-public class IndexBean {
+public class IndexBean implements Serializable{
 
     @EJB
     private InformesNoticiasSessionLocal informesNoticiasSession;
     private List<InformesNoticias> informesnoticias;
 
+    private PieChartModel livePieModel;
     public IndexBean() {
+        livePieModel=new PieChartModel();
+    }
+ 
+    public PieChartModel getLivePieModel() {
+        int random1 = (int)(Math.random() * 1000);
+        int random2 = (int)(Math.random() * 1000);
+ 
+        livePieModel.getData().put("Candidate 1", random1);
+        livePieModel.getData().put("Candidate 2", random2);
+         
+        livePieModel.setTitle("Votes");
+        livePieModel.setLegendPosition("ne");
+         
+        return livePieModel;
     }
 
     public List<InformesNoticias> getInformesnoticias() {

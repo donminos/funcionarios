@@ -1,13 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package mx.gob.jalisco.beans;
 
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import mx.gob.jalisco.entity.InformesNoticias;
 import mx.gob.jalisco.session.InformesNoticiasSessionLocal;
 
@@ -34,20 +32,24 @@ public class NoticiasBean {
     }
 
     public void setNoticiaId(Integer noticiaId) {
+        noticia=informesNoticiasSession.find(noticiaId);
         this.noticiaId = noticiaId;
     }
     
     public InformesNoticias getNoticia(){
-        noticia=informesNoticiasSession.find(noticiaId);
         return noticia;
     }
-    
+        
     public void setNoticia(InformesNoticias noticia){
         this.noticia=noticia;
     }
     
-    
     public void modificarNoticia(){
-        informesNoticiasSession.edit(noticia);
+        InformesNoticias noticiatmp=informesNoticiasSession.find(noticiaId);
+        noticiatmp.setCuerpo(noticia.getCuerpo());
+        noticiatmp.setTitulo(noticia.getTitulo());
+        informesNoticiasSession.edit(noticiatmp);
+        FacesMessage message = new FacesMessage("Succesful", "Se ha actualizado");
+        FacesContext.getCurrentInstance().addMessage(null, message);
     }
 }

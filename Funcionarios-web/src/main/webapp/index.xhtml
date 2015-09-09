@@ -16,26 +16,27 @@
                 <p:link outcome="administradores/panelControl" value="admin" rendered="#{request.isUserInRole('ADMINISTRADOR')}"/>
             </p:panelGrid>
             <p:panelGrid columns="2" layout="grid">
-            <h:form id="login" rendered="#{!request.isUserInRole('USUARIO') and !request.isUserInRole('FUNCIONARIO') and !request.isUserInRole('ADMINISTRADOR')}">
-                <p:outputLabel value="Accesar"/>
-                <p:panelGrid columns="2">
-                    <p:outputLabel for="user" value="Usuario"/>
-                    <p:inputText id="user" value="#{authenticationBean.usuario}" required="true" requiredMessage="Es necesario el usuario"/>
+                <h:form id="login" rendered="#{!request.isUserInRole('USUARIO') and !request.isUserInRole('FUNCIONARIO') and !request.isUserInRole('ADMINISTRADOR')}">
+                    <p:outputLabel value="Accesar"/>
+                    <p:panelGrid columns="2">
+                        <p:outputLabel for="user" value="Usuario"/>
+                        <p:inputText id="user" value="#{authenticationBean.usuario}" required="true" requiredMessage="Es necesario el usuario"/>
 
-                    <p:outputLabel for="pass" value="Contraseña"/>
-                    <p:password id="pass" value="#{authenticationBean.contrasena}" required="true" requiredMessage="Es necesario la contraseña"/>
+                        <p:outputLabel for="pass" value="Contraseña"/>
+                        <p:password id="pass" value="#{authenticationBean.contrasena}" required="true" requiredMessage="Es necesario la contraseña"/>
 
-                    <p:commandButton value="Accesar" ajax="false" action="#{authenticationBean.login()}"/>
-                </p:panelGrid>
-            </h:form>
-            
-                <p:panelGrid>
-                    charts
-                </p:panelGrid>
+                        <p:commandButton value="Accesar" ajax="false" action="#{authenticationBean.login()}"/>
+                    </p:panelGrid>
+                </h:form>
 
-            <h:form id="deslogin" rendered="#{request.isUserInRole('USUARIO') or request.isUserInRole('FUNCIONARIO') or request.isUserInRole('ADMINISTRADOR')}">
-                <p:commandButton value="Salir" ajax="false" action="#{authenticationBean.logout()}"/>
-            </h:form>
+                    <h:form>
+                        <p:poll interval="3" update="votes" />
+                        <p:chart id="votes" type="pie" model="#{indexBean.livePieModel}" style="width:400px;height:300px"/>
+                    </h:form>
+
+                <h:form id="deslogin" rendered="#{request.isUserInRole('USUARIO') or request.isUserInRole('FUNCIONARIO') or request.isUserInRole('ADMINISTRADOR')}">
+                    <p:commandButton value="Salir" ajax="false" action="#{authenticationBean.logout()}"/>
+                </h:form>
             </p:panelGrid>
             <h:form> 
                 <p:dataScroller value="#{indexBean.informesnoticias}" var="info" chunkSize="10">

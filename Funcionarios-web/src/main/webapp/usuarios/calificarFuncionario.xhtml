@@ -25,11 +25,12 @@
 
                     <p:outputLabel for="file" value="Archivos de justificacion"/>
                     <h:inputFile id="file" value="#{calificarFuncionarioBean.file}"/>
-                    
+
                     <f:facet name="footer">
                         <h:commandButton value="Enviar" action="#{calificarFuncionarioBean.handleCrear}">
                             <f:ajax execute="@all" render="@form"/>
                         </h:commandButton>
+                        <h:commandButton action="/index.jsf?faces-redirect=true" immediate="true" value="Atras" />
                     </f:facet>
                 </p:panelGrid>
                 <p:growl id="messages" showDetail="true" life="10000" />
