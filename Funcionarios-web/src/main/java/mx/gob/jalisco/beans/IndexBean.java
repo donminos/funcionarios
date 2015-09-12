@@ -3,12 +3,20 @@ package mx.gob.jalisco.beans;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
+import mx.gob.jalisco.catalog.Roles;
 import mx.gob.jalisco.entity.InformesNoticias;
+import mx.gob.jalisco.entity.Usuarios;
+import mx.gob.jalisco.session.CalificacionesSessionLocal;
 import mx.gob.jalisco.session.InformesNoticiasSessionLocal;
+import mx.gob.jalisco.session.RolesSessionLocal;
+import mx.gob.jalisco.session.UsuariosSessionLocal;
 import org.primefaces.model.chart.PieChartModel;
 
 /**
@@ -17,28 +25,44 @@ import org.primefaces.model.chart.PieChartModel;
  */
 @Named(value = "indexBean")
 @RequestScoped
-public class IndexBean implements Serializable{
-
+public class IndexBean implements Serializable {
+    @EJB
+    private RolesSessionLocal rolesSession;
+    @EJB
+    private CalificacionesSessionLocal calificacionesSession;
     @EJB
     private InformesNoticiasSessionLocal informesNoticiasSession;
+    
     private List<InformesNoticias> informesnoticias;
 
     private PieChartModel livePieModel;
+
     public IndexBean() {
-        livePieModel=new PieChartModel();
+        livePieModel = new PieChartModel();
     }
- 
+
     public PieChartModel getLivePieModel() {
-        int random1 = (int)(Math.random() * 1000);
-        int random2 = (int)(Math.random() * 1000);
- 
-        livePieModel.getData().put("Candidate 1", random1);
-        livePieModel.getData().put("Candidate 2", random2);
-         
-        livePieModel.setTitle("Votes");
+        Map<Usuarios, Float> calif = calificacionesSession.promedioCalificaciones();
+
+        for (Entry<Usuarios, Float> e: calif.entrySet()) {
+            Usuarios usu=(Usuarios)e.getKey();
+            livePieModel.getData().put(usu.getDatosUsuario().getNombreCompleto(),(Number)e.getValue());
+            System.out.println("[" + e.getKey() + "=" + e.getValue() + "]");
+        }
+
+        /*int random1 = (int) (Math.random() * 1000);
+        int random2 = (int) (Math.random() * 1000);
+
+        
+        livePieModel.getData().put("Candidate 2", random2);*/
+
+        livePieModel.setTitle("Calificacion de los Funcionarios");
         livePieModel.setLegendPosition("ne");
-         
         return livePieModel;
+    }
+
+    public void setLivePieModel(PieChartModel livePieModel) {
+        this.livePieModel = livePieModel;
     }
 
     public List<InformesNoticias> getInformesnoticias() {

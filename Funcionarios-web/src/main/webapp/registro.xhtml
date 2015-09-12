@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Funcionarios</title>
+    </h:head>
+    <h:body>
+        <f:view>
+            <h:form>
+                <h1><h:outputText value="Registro"/></h1>
+                <p:panelGrid columns="2"><p:outputLabel value="Correo:" for="correo" />
+                    <p:inputText id="correo" value="#{registroBean.usuario.correo}" title="Correo" required="true" requiredMessage="The Correo field is required."/>
+                    <p:outputLabel value="Contrasena:" for="contrasena" />
+                    <p:inputText id="contrasena" value="#{registroBean.usuario.contrasena}" title="Contrasena" required="true" requiredMessage="The Contrasena field is required."/>
+                    <p:outputLabel value="Nombre" for="nombre" />
+                    <p:inputText id="nombre" value="#{registroBean.usuario.datosUsuario.nombre}" />
+                    <p:outputLabel value="Apellido Paterno" for="app" />
+                    <p:inputText id="app" value="#{registroBean.usuario.datosUsuario.apellidoP}" />
+                    <p:outputLabel value="Apellido Materno" for="apm" />
+                    <p:inputText id="apm" value="#{registroBean.usuario.datosUsuario.apellidoM}" />
+                </p:panelGrid>
+            </h:form>
+        </f:view>
+    </h:body>
+</html>
+

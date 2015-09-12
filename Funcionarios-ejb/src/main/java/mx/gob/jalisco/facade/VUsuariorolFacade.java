@@ -16,6 +16,7 @@ import mx.gob.jalisco.entity.VUsuariorol;
  */
 @Stateless
 public class VUsuariorolFacade extends AbstractFacade<VUsuariorol> implements VUsuariorolFacadeLocal {
+
     @PersistenceContext(unitName = "Funcionarios-ejb_1.0-SNAPSHOTPU")
     private EntityManager em;
 
@@ -27,5 +28,4 @@ public class VUsuariorolFacade extends AbstractFacade<VUsuariorol> implements VU
     public VUsuariorolFacade() {
         super(VUsuariorol.class);
     }
-    
 }

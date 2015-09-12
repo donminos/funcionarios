@@ -7,6 +7,7 @@ package mx.gob.jalisco.facade;
 
 import java.util.List;
 import javax.ejb.Local;
+import mx.gob.jalisco.catalog.Roles;
 import mx.gob.jalisco.entity.Usuarios;
 
 /**
@@ -24,7 +25,7 @@ public interface UsuariosFacadeLocal {
 
     Usuarios find(Object id);
     
-    Usuarios findEmailUser(String email);
+    Usuarios findEmail(String email);
 
     List<Usuarios> findAll();
 

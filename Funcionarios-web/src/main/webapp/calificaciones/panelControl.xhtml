@@ -10,7 +10,7 @@
     <h:body>
         <f:view>
             <h:form id="calificacionesUsuarios">
-                <h1><h:outputText value="Calificaciones por atender"/></h1>
+                <h1><h:outputText value="Calificaciones"/></h1>
                 <p:dataTable reflow="true" rows="5" paginator="true" value="#{panelControl.calificaciones}" var="item">
                     <p:column>
                         <f:facet name="header">
@@ -50,7 +50,7 @@
                         </f:facet>
                         <h:outputText value="#{item.idUsuarios.datosUsuario.nombreCompleto}"/>
                     </p:column>
-                    <p:column>
+                    <p:column rendered="#{request.isUserInRole('ADMINISTRADOR')}">
                         <f:facet name="header">
                             <h:outputText value="Evaluación"/>
                         </f:facet>

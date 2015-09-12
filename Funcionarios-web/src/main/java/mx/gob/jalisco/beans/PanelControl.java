@@ -13,6 +13,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import mx.gob.jalisco.catalog.Evaluaciones;
 import mx.gob.jalisco.entity.Calificaciones;
@@ -51,15 +52,15 @@ public class PanelControl {
     }
     
     public List<Calificaciones> getCalificaciones() {
-        List<Calificaciones> calificaciones = calificacionesSession.findAll();
-        List<Calificaciones> calificacionessincalificar = new ArrayList();
-        for (Calificaciones calificacione : calificaciones) {
-            if (Evaluaciones.SINREVISAR.getDato() == calificacione.getEvaluado().getIdEvaluacionesCalificacion()) {
-                calificacionessincalificar.add(calificacione);
-            }
+        FacesContext context = FacesContext.getCurrentInstance();
+        HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
+        List<Calificaciones> calificaciones;
+        if(request.isUserInRole("ADMINISTRADOR")){
+            calificaciones = calificacionesSession.findCalifEstado(Evaluaciones.SINREVISAR);
+        }else{
+            calificaciones = calificacionesSession.findCalifEstado(Evaluaciones.ACEPTADO);
         }
-        Collections.reverse(calificaciones);
-        return calificacionessincalificar;
+        return calificaciones;
     }
 
     public void downloadFile(String data) {

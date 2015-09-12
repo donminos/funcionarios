@@ -1,12 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package mx.gob.jalisco.facade;
 
 import java.util.List;
+import java.util.Map;
 import javax.ejb.Local;
+import mx.gob.jalisco.catalog.Evaluaciones;
 import mx.gob.jalisco.entity.Calificaciones;
 import mx.gob.jalisco.entity.Usuarios;
 
@@ -25,9 +23,13 @@ public interface CalificacionesFacadeLocal {
 
     Calificaciones find(Object id);
     
+    Map<Usuarios,Float> promedioCalificaciones();
+    
     List<Calificaciones> findForUser(Usuarios usuario);
 
     List<Calificaciones> findAll();
+    
+    List<Calificaciones> findCalifEstado(Evaluaciones eva);
 
     List<Calificaciones> findRange(int[] range);
 

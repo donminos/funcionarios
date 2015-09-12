@@ -7,6 +7,7 @@ package mx.gob.jalisco.facade;
 
 import java.util.List;
 import javax.ejb.Local;
+import mx.gob.jalisco.catalog.Roles;
 import mx.gob.jalisco.entity.VUsuariorol;
 
 /**
@@ -25,7 +26,7 @@ public interface VUsuariorolFacadeLocal {
     VUsuariorol find(Object id);
 
     List<VUsuariorol> findAll();
-
+     
     List<VUsuariorol> findRange(int[] range);
 
     int count();

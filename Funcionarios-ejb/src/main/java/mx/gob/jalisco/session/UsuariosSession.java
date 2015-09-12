@@ -8,7 +8,6 @@ package mx.gob.jalisco.session;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import mx.gob.jalisco.DAO.UsuariosDAO;
 import mx.gob.jalisco.entity.Usuarios;
 import mx.gob.jalisco.facade.UsuariosFacadeLocal;
 
@@ -43,9 +42,9 @@ public class UsuariosSession implements UsuariosSessionLocal {
     
     @Override
     public Usuarios findEmail(String email) {
-        return usuariosFacade.findEmailUser(email);
+        return usuariosFacade.findEmail(email);
     }
-
+    
     @Override
     public List<Usuarios> findAll() {
         return usuariosFacade.findAll();

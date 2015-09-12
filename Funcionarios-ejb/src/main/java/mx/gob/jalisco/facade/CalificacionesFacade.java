@@ -12,6 +12,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import mx.gob.jalisco.catalog.Evaluaciones;
 import mx.gob.jalisco.entity.Calificaciones;
 import mx.gob.jalisco.entity.Usuarios;
 
@@ -42,16 +43,25 @@ public class CalificacionesFacade extends AbstractFacade<Calificaciones> impleme
         return calificaciones;
     }
 
-    public Map<Float, Usuarios> promedioCalificaciones() {
+    @Override
+    public Map<Usuarios,Float> promedioCalificaciones() {
         Query query = em.createQuery("SELECT avg(c.calificacion) as promedio,c.funcionarioEvaluado FROM Calificaciones c GROUP BY c.funcionarioEvaluado.idUsuarios ORDER BY c.funcionarioEvaluado.idUsuarios ASC");
         List<Object[]> results = query.getResultList();
-        Map<Float, Usuarios> mapa = new HashMap<Float, Usuarios>();
+        Map<Usuarios,Float> mapa = new HashMap();
         for (Object[] result : results) {
             Float promedio = ((Number) result[0]).floatValue();
             Usuarios funcionario = (Usuarios) result[1];
-            mapa.put(promedio, funcionario);
+            mapa.put(funcionario,promedio);
         }
         return mapa;
+    }
+    
+    @Override
+    public List<Calificaciones> findCalifEstado(Evaluaciones eva) {
+        Query query = em.createQuery("SELECT c FROM Calificaciones c WHERE c.evaluado.idEvaluacionesCalificacion=:roles", Calificaciones.class);
+        query.setParameter("roles", eva.getDato());
+        List<Calificaciones> calificaciones = (List<Calificaciones>) query.getResultList();
+        return calificaciones;
     }
 
 }

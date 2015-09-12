@@ -2,9 +2,11 @@ package mx.gob.jalisco.session;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import mx.gob.jalisco.catalog.Evaluaciones;
+import mx.gob.jalisco.catalog.Roles;
 import mx.gob.jalisco.entity.Calificaciones;
 import mx.gob.jalisco.entity.EvaluacionesCalificacion;
 import mx.gob.jalisco.entity.Usuarios;
@@ -53,6 +55,11 @@ public class CalificacionesSession implements CalificacionesSessionLocal {
     }
 
     @Override
+    public List<Calificaciones> findCalifEstado(Evaluaciones eva) {
+        return calificacionesFacade.findCalifEstado(eva);
+    }
+    
+    @Override
     public List<Calificaciones> findRange(int[] range) {
         return calificacionesFacade.findRange(range);
     }
@@ -60,5 +67,10 @@ public class CalificacionesSession implements CalificacionesSessionLocal {
     @Override
     public int count() {
         return calificacionesFacade.count();
+    }
+
+    @Override
+    public Map<Usuarios,Float> promedioCalificaciones() {
+        return calificacionesFacade.promedioCalificaciones();
     }
 }

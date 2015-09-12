@@ -13,7 +13,7 @@
             <p:panelGrid id="menu" columns="3">
                 <p:link outcome="usuarios/calificarFuncionario" value="calificacion" rendered="#{request.isUserInRole('USUARIO')}"/>
                 <p:link outcome="funcionarios/seguimiento" value="funcionario" rendered="#{request.isUserInRole('FUNCIONARIO')}"/>
-                <p:link outcome="administradores/panelControl" value="admin" rendered="#{request.isUserInRole('ADMINISTRADOR')}"/>
+                <p:link outcome="calificaciones/panelControl" value="Calificaciones" />
             </p:panelGrid>
             <p:panelGrid columns="2" layout="grid">
                 <h:form id="login" rendered="#{!request.isUserInRole('USUARIO') and !request.isUserInRole('FUNCIONARIO') and !request.isUserInRole('ADMINISTRADOR')}">
@@ -29,16 +29,16 @@
                     </p:panelGrid>
                 </h:form>
 
-                    <h:form>
-                        <p:poll interval="3" update="votes" />
-                        <p:chart id="votes" type="pie" model="#{indexBean.livePieModel}" style="width:400px;height:300px"/>
-                    </h:form>
+                <!--<h:form>
+                    <p:poll interval="3" update="votes" />
+                    <p:chart id="CalificacionFuncionario" type="pie" model="#{indexBean.livePieModel}" style="width:400px;height:300px"/>
+                </h:form>-->
 
                 <h:form id="deslogin" rendered="#{request.isUserInRole('USUARIO') or request.isUserInRole('FUNCIONARIO') or request.isUserInRole('ADMINISTRADOR')}">
                     <p:commandButton value="Salir" ajax="false" action="#{authenticationBean.logout()}"/>
                 </h:form>
             </p:panelGrid>
-            <h:form> 
+            <h:form>
                 <p:dataScroller value="#{indexBean.informesnoticias}" var="info" chunkSize="10">
                     <f:facet name="header">
                         Informes y Noticias

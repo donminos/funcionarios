@@ -2,6 +2,7 @@ package mx.gob.jalisco.session;
 
 import java.util.List;
 import javax.ejb.Local;
+import mx.gob.jalisco.catalog.Roles;
 import mx.gob.jalisco.entity.Usuarios;
 
 /**
