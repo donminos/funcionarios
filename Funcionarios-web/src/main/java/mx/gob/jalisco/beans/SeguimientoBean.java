@@ -9,6 +9,7 @@ import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.Part;
 import mx.gob.jalisco.entity.Categorias;
 import mx.gob.jalisco.entity.InformesNoticias;
@@ -70,21 +71,25 @@ public class SeguimientoBean {
     }
 
     public void crearNoticia() {
-        if (file != null) {
-            try {
+        FacesContext context = FacesContext.getCurrentInstance();
+        HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
+        try {
+            if (file != null && file.getSubmittedFileName().split("\\.")[1].equals("jpg")) {
                 GenerateRandomName random = new GenerateRandomName();
                 String namefile = random.Generate() + ".jpg";
                 file.write("/informesNoticias/" + namefile);
                 informes.setTituloImagen(namefile);
-            } catch (IOException ex) {
-                FacesContext context = FacesContext.getCurrentInstance();
-                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "No es un tipo de archivo valido"));
-                Logger.getLogger(SeguimientoBean.class.getName()).log(Level.SEVERE, null, ex);
+            } else {
+                throw new Exception("Archivo invalido");
             }
+        } catch (Exception ex) {
+            Logger.getLogger(SeguimientoBean.class.getName()).log(Level.SEVERE, null, ex);
+            context = FacesContext.getCurrentInstance();
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", ex.getMessage()));
         }
-        informes.setFuncionario(usuariosSession.find(1));
         informes.setCategoria(categoria);
-        informesNoticiasSession.create(informes);
+        informesNoticiasSession.create(informes, String.valueOf(request.getUserPrincipal()));
+        informes = new InformesNoticias();
         FacesMessage message = new FacesMessage("Succesful", "Se ha publicado la noticia");
         FacesContext.getCurrentInstance().addMessage(null, message);
     }

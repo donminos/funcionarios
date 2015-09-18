@@ -26,12 +26,13 @@
                         <p:password id="pass" value="#{authenticationBean.contrasena}" required="true" requiredMessage="Es necesario la contraseña"/>
 
                         <p:commandButton value="Accesar" ajax="false" action="#{authenticationBean.login()}"/>
+                        <p:commandButton value="Registrarse" ajax="false" immediate="true" action="registro.jsf?faces-redirect=true"/>
                     </p:panelGrid>
                 </h:form>
 
                 <!--<h:form>
                     <p:poll interval="3" update="votes" />
-                    <p:chart id="CalificacionFuncionario" type="pie" model="#{indexBean.livePieModel}" style="width:400px;height:300px"/>
+                    <p:chart id="CalificacionFuncionario" type="pie" model="{indexBean.livePieModel}" style="width:400px;height:300px"/>
                 </h:form>-->
 
                 <h:form id="deslogin" rendered="#{request.isUserInRole('USUARIO') or request.isUserInRole('FUNCIONARIO') or request.isUserInRole('ADMINISTRADOR')}">

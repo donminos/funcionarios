@@ -4,6 +4,7 @@ package mx.gob.jalisco.beans;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
+import mx.gob.jalisco.entity.DatosUsuario;
 import mx.gob.jalisco.entity.Usuarios;
 import mx.gob.jalisco.session.RolesSessionLocal;
 import mx.gob.jalisco.session.UsuariosSessionLocal;
@@ -23,6 +24,8 @@ public class RegistroBean {
     private Usuarios usuario;    
     
     public RegistroBean() {
+        usuario=new Usuarios();
+        usuario.setDatosUsuario(new DatosUsuario());
     }
 
     public Usuarios getUsuario() {

@@ -3,20 +3,17 @@ package mx.gob.jalisco.beans;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
-import mx.gob.jalisco.catalog.Roles;
 import mx.gob.jalisco.entity.InformesNoticias;
 import mx.gob.jalisco.entity.Usuarios;
 import mx.gob.jalisco.session.CalificacionesSessionLocal;
 import mx.gob.jalisco.session.InformesNoticiasSessionLocal;
 import mx.gob.jalisco.session.RolesSessionLocal;
-import mx.gob.jalisco.session.UsuariosSessionLocal;
 import org.primefaces.model.chart.PieChartModel;
 
 /**
@@ -40,7 +37,7 @@ public class IndexBean implements Serializable {
     public IndexBean() {
         livePieModel = new PieChartModel();
     }
-
+/*
     public PieChartModel getLivePieModel() {
         Map<Usuarios, Float> calif = calificacionesSession.promedioCalificaciones();
 
@@ -54,7 +51,7 @@ public class IndexBean implements Serializable {
         int random2 = (int) (Math.random() * 1000);
 
         
-        livePieModel.getData().put("Candidate 2", random2);*/
+        livePieModel.getData().put("Candidate 2", random2);
 
         livePieModel.setTitle("Calificacion de los Funcionarios");
         livePieModel.setLegendPosition("ne");
@@ -63,7 +60,7 @@ public class IndexBean implements Serializable {
 
     public void setLivePieModel(PieChartModel livePieModel) {
         this.livePieModel = livePieModel;
-    }
+    }*/
 
     public List<InformesNoticias> getInformesnoticias() {
         informesnoticias = informesNoticiasSession.findAll();

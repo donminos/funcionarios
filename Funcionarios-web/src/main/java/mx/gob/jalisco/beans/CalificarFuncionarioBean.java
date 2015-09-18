@@ -1,12 +1,6 @@
 package mx.gob.jalisco.beans;
 
-import java.io.IOException;
-import java.io.Serializable;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
@@ -39,7 +33,7 @@ public class CalificarFuncionarioBean {
     private mx.gob.jalisco.session.CalificacionesSessionLocal calificacionesSession;
 
     private Part file;
-    private Integer funcionario;
+    private String funcionario;
     private Calificaciones calificacion;
 
     public CalificarFuncionarioBean() {
@@ -47,15 +41,15 @@ public class CalificarFuncionarioBean {
     }
 
     public List<Usuarios> getFuncionarios() {
-        List<Usuarios> funcionarios=rolesSession.find(Roles.FUNCIONARIO.getDato()).getUsuariosList();
+        List<Usuarios> funcionarios = rolesSession.find(Roles.FUNCIONARIO.getDato()).getUsuariosList();
         return funcionarios;
     }
 
-    public Integer getFuncionario() {
+    public String getFuncionario() {
         return funcionario;
     }
 
-    public void setFuncionario(Integer funcionario) {
+    public void setFuncionario(String funcionario) {
         this.funcionario = funcionario;
     }
 
@@ -78,20 +72,9 @@ public class CalificarFuncionarioBean {
     public void handleCrear() {
         FacesContext context = FacesContext.getCurrentInstance();
         HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
-        Usuarios usuario = usuariosSession.findEmail(String.valueOf(request.getUserPrincipal()));
-        List<Calificaciones> listacalif = calificacionesSession.findForUser(usuario);
         try {
-            for (Calificaciones calif : listacalif) {
-                int añosDespues = 1;//Años despues de la ultima evaluacion
-                calif.getFechaEvaluacion().setYear(calif.getFechaEvaluacion().getYear() + añosDespues);
-                if (calif.getFuncionarioEvaluado().getIdUsuarios() == funcionario && calif.getFechaEvaluacion().after(new Date())) {
-                    throw new Exception("Ya haz calificado a este funcionario");
-                }
-            }
             this.construirArchivo();
-            calificacion.setIdUsuarios(usuario);
-            calificacion.setFuncionarioEvaluado(usuariosSession.find(funcionario));
-            calificacionesSession.create(calificacion);
+            calificacionesSession.create(calificacion, funcionario, String.valueOf(request.getUserPrincipal()));
             calificacion = new Calificaciones();
             FacesMessage message = new FacesMessage("Succesful", "Se ha mandado tu calificacion");
             FacesContext.getCurrentInstance().addMessage(null, message);

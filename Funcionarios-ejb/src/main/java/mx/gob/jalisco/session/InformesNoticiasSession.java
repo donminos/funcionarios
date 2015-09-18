@@ -10,7 +10,9 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import mx.gob.jalisco.entity.InformesNoticias;
+import mx.gob.jalisco.entity.Usuarios;
 import mx.gob.jalisco.facade.InformesNoticiasFacadeLocal;
+import mx.gob.jalisco.facade.UsuariosFacadeLocal;
 
 /**
  *
@@ -19,10 +21,15 @@ import mx.gob.jalisco.facade.InformesNoticiasFacadeLocal;
 @Stateless
 public class InformesNoticiasSession implements InformesNoticiasSessionLocal {
     @EJB
+    private UsuariosFacadeLocal usuariosFacade;
+    @EJB
     private InformesNoticiasFacadeLocal informesNoticiasFacade;
+    
 
     @Override
-    public void create(InformesNoticias informesNoticias) {
+    public void create(InformesNoticias informesNoticias,String emailfuncionario) {
+        Usuarios funcionario=usuariosFacade.findEmail(emailfuncionario);
+        informesNoticias.setFuncionario(funcionario);
         informesNoticias.setFechaCreacion(new Date());
         informesNoticias.setFechaModificacion(new Date());
         informesNoticiasFacade.create(informesNoticias);

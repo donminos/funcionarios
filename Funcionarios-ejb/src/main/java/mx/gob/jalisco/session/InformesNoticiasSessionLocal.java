@@ -11,7 +11,7 @@ import mx.gob.jalisco.entity.InformesNoticias;
 @Local
 public interface InformesNoticiasSessionLocal {
 
-    public void create(InformesNoticias informesNoticias);
+    public void create(InformesNoticias informesNoticias,String emailfuncionario);
 
     public void edit(InformesNoticias informesNoticias);
 

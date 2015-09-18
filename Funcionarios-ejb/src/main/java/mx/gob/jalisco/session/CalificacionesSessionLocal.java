@@ -15,7 +15,7 @@ import mx.gob.jalisco.entity.Usuarios;
 @Local
 public interface CalificacionesSessionLocal {
     
-    public void create(Calificaciones calificaciones);
+    public void create(Calificaciones calificaciones,String funcionario,String usuario) throws Exception;
 
     public void edit(Calificaciones calificaciones);
 
