@@ -21,6 +21,10 @@
                     <p:inputText id="app" value="#{registroBean.usuario.datosUsuario.apellidoP}" />
                     <p:outputLabel value="Apellido Materno" for="apm" />
                     <p:inputText id="apm" value="#{registroBean.usuario.datosUsuario.apellidoM}" />
+                    <f:facet name="footer">
+                        <p:commandButton value="Registrarse" action="#{registroBean.createUser()}"/>
+                        <p:commandButton value="Atras" ajax="false" immediate="true" action="index.jsf?faces-redirect=true"/>
+                    </f:facet>
                 </p:panelGrid>
             </h:form>
         </f:view>

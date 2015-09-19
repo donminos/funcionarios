@@ -4,9 +4,9 @@ package mx.gob.jalisco.beans;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
+import mx.gob.jalisco.catalog.Roles;
 import mx.gob.jalisco.entity.DatosUsuario;
 import mx.gob.jalisco.entity.Usuarios;
-import mx.gob.jalisco.session.RolesSessionLocal;
 import mx.gob.jalisco.session.UsuariosSessionLocal;
 
 /**
@@ -16,8 +16,6 @@ import mx.gob.jalisco.session.UsuariosSessionLocal;
 @Named(value = "registroBean")
 @RequestScoped
 public class RegistroBean {
-    @EJB
-    private RolesSessionLocal rolesSession;
     @EJB
     private UsuariosSessionLocal usuariosSession;
     
@@ -34,6 +32,10 @@ public class RegistroBean {
 
     public void setUsuario(Usuarios usuario) {
         this.usuario = usuario;
+    }
+    
+    public void createUser(){
+        usuariosSession.create(usuario,Roles.USUARIO);
     }
     
 }

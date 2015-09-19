@@ -51,12 +51,6 @@ public class AuthenticationBean {
             request.login(usuario, contrasena);
             userPrincipal = request.getUserPrincipal();
             Logger.getLogger(this.getClass().getName()).log(Level.INFO, "Login Correcto del usuario ".concat(userPrincipal.getName()));
-            /*if (request.isUserInRole("OWNER")) {
-             context.getExternalContext().redirect("/SistemaEmpresarial-web/owner/");
-             }
-             if (request.isUserInRole("INVENTORYMAN")) {
-             context.getExternalContext().redirect("/SistemaEmpresarial-web/inventoryman/");
-             }*/
         } catch (ServletException ex) {
             context = FacesContext.getCurrentInstance();
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "No es un usuario valido"));

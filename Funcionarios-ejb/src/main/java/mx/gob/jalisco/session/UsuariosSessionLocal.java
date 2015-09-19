@@ -12,7 +12,7 @@ import mx.gob.jalisco.entity.Usuarios;
 @Local
 public interface UsuariosSessionLocal {
 
-    public void create(Usuarios usuarios);
+    public void create(Usuarios usuarios,Roles rol);
 
     public void edit(Usuarios usuarios);
 

@@ -37,7 +37,6 @@ public class IndexBean implements Serializable {
     public IndexBean() {
         livePieModel = new PieChartModel();
     }
-/*
     public PieChartModel getLivePieModel() {
         Map<Usuarios, Float> calif = calificacionesSession.promedioCalificaciones();
 
@@ -46,13 +45,7 @@ public class IndexBean implements Serializable {
             livePieModel.getData().put(usu.getDatosUsuario().getNombreCompleto(),(Number)e.getValue());
             System.out.println("[" + e.getKey() + "=" + e.getValue() + "]");
         }
-
-        /*int random1 = (int) (Math.random() * 1000);
-        int random2 = (int) (Math.random() * 1000);
-
         
-        livePieModel.getData().put("Candidate 2", random2);
-
         livePieModel.setTitle("Calificacion de los Funcionarios");
         livePieModel.setLegendPosition("ne");
         return livePieModel;
@@ -60,7 +53,7 @@ public class IndexBean implements Serializable {
 
     public void setLivePieModel(PieChartModel livePieModel) {
         this.livePieModel = livePieModel;
-    }*/
+    }
 
     public List<InformesNoticias> getInformesnoticias() {
         informesnoticias = informesNoticiasSession.findAll();
